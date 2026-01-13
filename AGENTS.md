@@ -81,3 +81,7 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 - `src/widget/power-actions/index.tsx` defines the power actions tile placeholder component with the `tile--power-actions` root class.
 - `src/widget/storage/index.tsx` defines the storage tile placeholder component with the `tile--storage` root class.
 - `src/widget/network/index.tsx` defines the network tile placeholder component with the `tile--network` root class.
+- `src/widget/clock/index.tsx` now implements the clock tile using a `createPoll` helper bound to the `date` command and centers a time label inside a light-themed square tile.
+- `src/widget/clock/style.scss` styles the clock tile typography and adds gentle label margins for optical balance.
+- `src/widget/Bar.tsx` now renders the clock tile in the first square slot of the top row.
+- `src/style.scss` now imports the clock tile stylesheet so the tile-level typography rules are loaded with the global CSS.
