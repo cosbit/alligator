@@ -61,6 +61,7 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 - `src/widget/Bar.tsx` now renders tile placeholders with `.tile` shape classes to match the layout rows.
 - `src/style.scss` defines global tile sizing, spacing, and layout rules for the sidebar; it now imports the Bar-specific partial and avoids unsupported GTK4 CSS sizing properties.
 - `src/style.scss` now defines global CSS variables for bar width, tile unit sizing, gutter spacing, and Gruvbox palette tokens, plus `.tile` sizing and shape variants with dark/light theme classes.
+- `src/style.scss` now uses `background-color` for `.tile--dark` and `.tile--light` so tiles render solid fills.
 - `src/styles/bar.scss` defines Bar container transparency, width, spacing, and row alignment rules (layout-only).
 - `src/styles/bar.scss` now only contains GTK CSS-friendly presentation rules (no flexbox layout properties).
 - `prompts/01-bar-container.md` defines the prompt for the transparent Bar container setup.
@@ -76,6 +77,7 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 - `prompts/09-storage-tile.md` defines the prompt for the storage tile content and styles.
 - `prompts/10-network-tile.md` defines the prompt for the network tile content and styles.
 - `src/widget/clock/index.tsx` defines the clock tile placeholder component with the `tile--clock` root class.
+- `src/widget/clock/index.tsx` now centers the clock tile and disables expansion so it stays square-sized.
 - `src/widget/date/index.tsx` defines the date tile placeholder component with the `tile--date` root class.
 - `src/widget/battery/index.tsx` defines the battery tile placeholder component with the `tile--battery` root class.
 - `src/widget/power-actions/index.tsx` defines the power actions tile placeholder component with the `tile--power-actions` root class.

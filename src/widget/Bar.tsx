@@ -9,6 +9,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
         name="sidebar"
         className="Bar"
         gdkmonitor={gdkmonitor}
+        visible={true}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         widthRequest={220}
         anchor={TOP | RIGHT | BOTTOM}

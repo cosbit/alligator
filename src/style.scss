@@ -54,11 +54,11 @@ $bg-color: #{"@theme_bg_color"};
 }
 
 .tile--dark {
-    background: var(--gb-bg);
+    background-color: var(--gb-bg);
     color: var(--gb-fg);
 }
 
 .tile--light {
-    background: var(--gb-light-bg);
+    background-color: var(--gb-light-bg);
     color: var(--gb-light-fg);
 }
