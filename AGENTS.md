@@ -24,3 +24,7 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 
 ## Production goal
 - Toggle the sidebar: `ags toggle sidebar`
+
+## File notes
+- `AGENTS.md` captures workflow rules and running architecture notes for the repo.
+- `src/widget/Bar.tsx` defines the Bar window widget layout and its child controls.

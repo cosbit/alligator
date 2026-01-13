@@ -4,15 +4,16 @@ import { Variable } from "astal"
 const time = Variable("").poll(1000, "date")
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
-    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
+    const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
 
     return <window
         className="Bar"
         gdkmonitor={gdkmonitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
-        anchor={TOP | LEFT | RIGHT}
+        anchor={TOP | RIGHT | BOTTOM}
+        widthRequest={150}
         application={App}>
-        <centerbox>
+        <centerbox vertical>
             <button
                 onClicked="echo hello"
                 halign={Gtk.Align.CENTER}
