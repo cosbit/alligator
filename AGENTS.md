@@ -14,10 +14,13 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 
 ## Development workflow
 - Enter the dev shell: `nix develop`
-- Run the config locally: `ags -c ./src/config.ts`
-- Toggle the sidebar: `ags toggle sidebar`
+- Run the config locally: `ags -c ./src/app.ts`
 
 ## Conventions
 - Keep windows named and stable so `ags toggle <name>` works predictably.
 - Prefer simple widget factories over large monoliths in `config.ts`.
 - Keep UI layout empty/transparent by default; fill in modules incrementally.
+
+
+## Production goal
+- Toggle the sidebar: `ags toggle sidebar`
