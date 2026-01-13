@@ -1,20 +1,62 @@
+@use "./styles/bar";
+
 // https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
 $fg-color: #{"@theme_fg_color"};
 $bg-color: #{"@theme_bg_color"};
 
-window.Bar {
-    background: transparent;
-    color: $fg-color;
-    font-weight: bold;
+* {
+    --bar-width: 360px;
+    --tile-unit: 96px;
+    --tile-gutter: 12px;
+    --gb-bg: #282828;
+    --gb-bg-soft: #32302f;
+    --gb-bg-hard: #1d2021;
+    --gb-fg: #ebdbb2;
+    --gb-fg-soft: #d5c4a1;
+    --gb-fg-muted: #bdae93;
+    --gb-selection: #3c3836;
+    --gb-accent-active: #fabd2f;
+    --gb-accent-inactive: #7c6f64;
+    --gb-red: #cc241d;
+    --gb-green: #98971a;
+    --gb-yellow: #d79921;
+    --gb-blue: #458588;
+    --gb-purple: #b16286;
+    --gb-aqua: #689d6a;
+    --gb-orange: #d65d0e;
+    --gb-gray: #928374;
+    --gb-light-bg: #fbf1c7;
+    --gb-light-fg: #3c3836;
+}
 
-    >centerbox {
-        background: $bg-color;
-        border-radius: 10px;
-        margin: 8px;
-    }
+.tile {
+    --tile-width: var(--tile-unit);
+    --tile-height: var(--tile-unit);
+    min-width: var(--tile-width);
+    min-height: var(--tile-height);
+}
 
-    button {
-        border-radius: 8px;
-        margin: 2px;
-    }
+.tile--square {
+    --tile-width: var(--tile-unit);
+    --tile-height: var(--tile-unit);
+}
+
+.tile--horizontal {
+    --tile-width: calc((var(--tile-unit) * 2) + var(--tile-gutter));
+    --tile-height: var(--tile-unit);
+}
+
+.tile--vertical {
+    --tile-width: var(--tile-unit);
+    --tile-height: calc((var(--tile-unit) * 2) + var(--tile-gutter));
+}
+
+.tile--dark {
+    background: var(--gb-bg);
+    color: var(--gb-fg);
+}
+
+.tile--light {
+    background: var(--gb-light-bg);
+    color: var(--gb-light-fg);
 }

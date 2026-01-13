@@ -3,7 +3,7 @@ Complete set of desktop widgets with a brutalist acid theme.
 
 ## Development (Nix)
 1. `nix develop`
-2. `ags -c ./src/config.ts`
+2. `ags -c ./src/app.ts`
 3. `ags toggle sidebar`
 
 ## NixOS integration (flake)
