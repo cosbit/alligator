@@ -1,6 +1,7 @@
 import { Astal, Gdk, Gtk } from "astal/gtk4"
 import ClockTile from "./clock"
 import DateTile from "./date"
+import BatteryTile from "./battery"
 
 export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
@@ -39,7 +40,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
             >
                 <box className="tile tile--vertical tile--dark" />
                 <box className="bar__column bar__column--stack" vertical spacing={tileGutter}>
-                    <box className="tile tile--square tile--dark" />
+                    <BatteryTile/>
                     <box className="tile tile--square tile--dark" />
                 </box>
             </box>

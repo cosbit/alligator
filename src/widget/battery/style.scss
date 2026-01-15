@@ -1,0 +1,38 @@
+.tile--battery {
+    border-radius: 18px;
+}
+
+.battery__cells {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.battery__cell {
+    min-width: 12px;
+    min-height: 22px;
+    border-radius: 3px;
+    background-color: var(--gb-bg);
+    border: 2px solid var(--gb-bg-hard);
+}
+
+.battery__cell--active {
+    background-color: var(--gb-green);
+    border-color: var(--gb-green);
+}
+
+.battery__cell--warning {
+    background-color: var(--gb-yellow);
+    border-color: var(--gb-yellow);
+}
+
+.battery__cell--inactive {
+    background-color: var(--gb-bg);
+    border-color: var(--gb-bg-hard);
+}
+
+.battery__glyph {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    margin-top: 1px;
+}
