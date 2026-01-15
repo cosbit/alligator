@@ -1,11 +1,14 @@
 .Bar {
-    background: transparent;
     border: none;
     box-shadow: none;
     min-width: 100px;
+    
 }
 
 .bar__inner {
-    min-width: 100px;
+    background: transparent;
     padding: 16px;
+    margin: 5px;
+    margin-top: 2px;
+    font-family: "Sk-Modernist";
 }

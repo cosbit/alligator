@@ -31,10 +31,120 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 - Prefer `createBinding` to GObject properties when available; fall back to `createPoll` for CLI commands and keep intervals modest.
 - Keep binding helpers small and readable; derive display strings with `createComputed` rather than ad-hoc `setTimeout`/poll loops.
 
+## Prompt planning guidance
+- When writing planning instructions in `prompts/`, be specific, surgical, and methodological.
+- Spell out exact functions, files, and behavior; avoid vague or high-level steps.
+- If any detail is unclear, do not guess. Add a short clarification request at the end of the prompt file.
+
 ## Binding tips and references
 - Accessors: `createState` for local writable state, `createComputed` for derived values, `createBinding` for GObject properties.
 - Polling: `createPoll(initial, intervalMs, commandOrFn)` for external commands; prefer event-driven sources when possible.
 - Accessor usage: `value()` reads current value; `value((v) => ...)` is shorthand for `createComputed`.
+
+## Poll + Variable guidance (AGS tips)
+- Use `Variable().poll` (or `createPoll`) only when no event-driven API exists; prefer GObject bindings or signals first.
+- Keep polling intervals modest (minutes for clock-like data) to avoid expensive subprocess churn.
+- For CLI integration, keep commands simple and format output at the source (e.g., `date` format strings) to minimize parsing.
+- Use `createComputed` (or Accessor shorthand) to derive display strings instead of manual timers.
+- Avoid polling when you can use `GLib.DateTime`, JS `Date`, or newer `Temporal` for local time.
+
+## Reference implementation (clock tile binding + layout)
+- `src/widget/clock/index.tsx` uses a small `createPoll` helper around `Variable().poll` and binds to `date +"%-I:%M %p"` on a 60_000ms interval.
+- The label reads the Accessor via `time()` and trims output once, keeping the format `9:23 AM`.
+- The root tile uses `tile tile--square tile--clock tile--light` plus `halign/valign` center and `hexpand/vexpand={false}` to avoid filling the row.
+- The label uses `halign/valign` center and `hexpand/vexpand` to center content inside the tile.
+- `src/widget/clock/style.scss` holds typography and subtle vertical margins for optical centering.
+- `src/style.scss` enforces solid tile fills with `background-color` and sets sizing via `--tile-unit` and `.tile` min sizes.
+- `src/widget/Bar.tsx` uses `widthRequest={220}` as the bar width reference when balancing tile sizing.
+
+## AGS Binding and Variable Docs (for implementation reference)
+for reference, see the ags docs:
+State management
+
+State is managed using signals which are called Accessor.
+
+with createState you can instantiate a writable reactive value
+with createBinding you can hook into GObject properties.
+with createComputed you can derive reactive values
+State example
+GObject example
+```typescript
+import { createState, createComputed } from "ags"
+
+function Counter() {
+const [count, setCount] = createState(0)
+
+function increment() {
+setCount((v) => v + 1)
+}
+
+const label = createComputed(() => count().toString())
+
+return (
+<box>
+<label label={label} />
+<button onClicked={increment}>Click to increment</button>
+</box>
+)
+}
+```
+Notice how in the createComputed body count is called as a function to track it automatically as a dependency for the derived label property.
+
+TIP
+
+There is a shorthand for createComputed.
+
+// these two lines mean and do the same thing
+```typescript
+const label = createComputed(() => count().toString())
+const label = count((c) => c.toString())
+```
+Integrating external programs
+
+Other than the aforementioned functions to manage state, AGS provides ways to integrate CLI tools you might be already familiar with: createPoll which polls a program at each given interval and createSubprocess which launches a given program and monitors its standard output.
+
+As an example let's say you want to use the date CLI command to get a formatted date.
+```typescript
+const date = createPoll("", 1000, bash -c "date +%H:%M")
+
+return <label label={date} />
+```
+WARNING
+
+Running subprocesses are relatively expensive, so always prefer to use a library when available.
+
+In reality you would use GLib.DateTime or JavaScript's Date. In newer version of GJS (1.85.2 >=) you can also use the new Temporal JavaScript builtin.
+```typescript
+const date = createPoll("", 1000, () => new Date().toString())
+
+return <label label={date} />
+```
+Avoid polling when possible.
+
+Keep in mind that polling is generally considered bad practice. You should use events and signals whenever possible which will only do operations when necessary.
+Dynamic rendering
+
+When you want to render based on a value, you can use the <With> component.
+```typescript
+import { With, Accessor } from "ags"
+
+let value: Accessor<{ member: string } | null>
+
+return (
+<box>
+<With value={value}>
+{(value) => value && <label label={value.member} />}
+</With>
+</box>
+)
+```
+TIP
+
+In most cases it is better to always render the component and set its visible property instead. Use <With> in cases when you need to unpack a nullable object or when you need to access nested values.
+
+WARNING
+
+When the value changes and the widget is re-rendered the previous one is removed from the parent component and the new one is appended. Order of widgets are not kept so make sure to wrap <With> in a container to avoid it. This is due to Gtk not having a generic API on containers to sort widgets.
 
 ## Sidebar tile architecture (molecular components)
 - The Bar window is a transparent container that only handles layout and spacing for tiles.
@@ -72,6 +182,7 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 - `prompts/05-clock-tile.md` defines the prompt for the clock tile content and styles.
 - `prompts/05-clock-tile.md` now specifies a createPoll Accessor bound to the `date` command, minute-formatted time output, light theme styling, centered label margins, and logic-first/layout-last file ordering.
 - `prompts/06-date-tile.md` defines the prompt for the date tile content and styles.
+- `prompts/06-date-tile.md` now specifies a two-label layout with a larger day name and a smaller date formatted as `01 Jan 2026`.
 - `prompts/07-battery-tile.md` defines the prompt for the battery tile content and styles.
 - `prompts/08-power-actions-tile.md` defines the prompt for the power actions tile content and styles.
 - `prompts/09-storage-tile.md` defines the prompt for the storage tile content and styles.

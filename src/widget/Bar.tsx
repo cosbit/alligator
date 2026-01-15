@@ -1,5 +1,6 @@
 import { Astal, Gdk, Gtk } from "astal/gtk4"
 import ClockTile from "./clock"
+import DateTile from "./date"
 
 export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
@@ -22,7 +23,8 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
                 halign={Gtk.Align.CENTER}
                 spacing={tileGutter}
             >
-                <ClockTile />
+                <ClockTile/>
+                <DateTile/>
             </box>
             <box
                 className="bar__row bar__row--single"

@@ -1,11 +1,13 @@
 @use "./styles/bar";
 @use "./widget/clock/style";
+@use "./widget/date/style";
 
 // https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
 $fg-color: #{"@theme_fg_color"};
 $bg-color: #{"@theme_bg_color"};
 
 * {
+    all: unset;
     --bar-width: 360px;
     --tile-unit: 96px;
     --tile-gutter: 12px;
@@ -28,7 +30,6 @@ $bg-color: #{"@theme_bg_color"};
     --gb-gray: #928374;
     --gb-light-bg: #fbf1c7;
     --gb-light-fg: #3c3836;
-    all: unset;
 }
 
 .tile {
