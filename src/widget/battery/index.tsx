@@ -153,7 +153,7 @@ function createCellClass(index: number, infoAccessor: ReturnType<typeof createBa
         return `battery__cell ${
             isWarning ? "battery__cell--warning" : "battery__cell--active"
         }`
-    })
+    }).as(splitClasses)
 }
 
 function createChargingGlyph(infoAccessor: ReturnType<typeof createBatteryPoll>) {
@@ -163,10 +163,10 @@ function createChargingGlyph(infoAccessor: ReturnType<typeof createBatteryPoll>)
 export default function BatteryTile() {
     const info = createBatteryPoll()
     const cellClasses = [
-        createCellClass(0, info)(splitClasses),
-        createCellClass(1, info)(splitClasses),
-        createCellClass(2, info)(splitClasses),
-        createCellClass(3, info)(splitClasses),
+        createCellClass(0, info),
+        createCellClass(1, info),
+        createCellClass(2, info),
+        createCellClass(3, info),
     ]
     const glyph = createChargingGlyph(info)
 

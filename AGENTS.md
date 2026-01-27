@@ -1248,3 +1248,4 @@ event controller.
 - `src/widget/power-actions/index.tsx` now uses `cssClasses` arrays for its tile root.
 - `src/widget/storage/index.tsx` now uses `cssClasses` arrays for its tile root.
 - `src/widget/network/index.tsx` now uses `cssClasses` arrays for its tile root.
+- `src/widget/battery/index.tsx` now maps battery cell class strings to string arrays via `Binding.as(...)` so `cssClasses` bindings stay reactive without calling bindings as functions.
