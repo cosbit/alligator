@@ -21,14 +21,14 @@ const time = createPoll(
 export default function ClockTile() {
     return (
         <box
-            className="tile tile--square tile--clock tile--light"
+            cssClasses={["tile", "tile--square", "tile--clock", "tile--light"]}
             // halign={Gtk.Align.CENTER}
             // valign={Gtk.Align.CENTER}
             hexpand={false}
             vexpand={false}
         >
             <label
-                className="clock__time"
+                cssClasses={["clock__time"]}
                 label={time()}
                 halign={Gtk.Align.CENTER}
                 valign={Gtk.Align.CENTER}

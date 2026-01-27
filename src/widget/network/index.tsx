@@ -1,3 +1,3 @@
 export default function NetworkTile() {
-    return <box className="tile tile--network" />
+    return <box cssClasses={["tile", "tile--network"]} />
 }

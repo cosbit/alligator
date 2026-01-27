@@ -3,6 +3,9 @@ import { Variable } from "astal"
 import GLib from "gi://GLib"
 import "./style.scss"
 
+const splitClasses = (value: string) =>
+    value.trim().split(/\s+/).filter(Boolean)
+
 type BatteryPaths = {
     capacityPath: string
     statusPath: string
@@ -160,23 +163,23 @@ function createChargingGlyph(infoAccessor: ReturnType<typeof createBatteryPoll>)
 export default function BatteryTile() {
     const info = createBatteryPoll()
     const cellClasses = [
-        createCellClass(0, info),
-        createCellClass(1, info),
-        createCellClass(2, info),
-        createCellClass(3, info),
+        createCellClass(0, info)(splitClasses),
+        createCellClass(1, info)(splitClasses),
+        createCellClass(2, info)(splitClasses),
+        createCellClass(3, info)(splitClasses),
     ]
     const glyph = createChargingGlyph(info)
 
     return (
         <box
-            className="tile tile--square tile--battery tile--dark"
+            cssClasses={["tile", "tile--square", "tile--battery", "tile--dark"]}
             halign={Gtk.Align.CENTER}
             valign={Gtk.Align.CENTER}
             hexpand={false}
             vexpand={false}
         >
             <box
-                className="battery__content"
+                cssClasses={["battery__content"]}
                 spacing={6}
                 halign={Gtk.Align.CENTER}
                 valign={Gtk.Align.CENTER}
@@ -184,20 +187,20 @@ export default function BatteryTile() {
                 vexpand={false}
             >
                 <box
-                    className="battery__cells"
+                    cssClasses={["battery__cells"]}
                     spacing={4}
                     halign={Gtk.Align.CENTER}
                     valign={Gtk.Align.CENTER}
                     hexpand={false}
                     vexpand={false}
                 >
-                    <box className={cellClasses[0]} />
-                    <box className={cellClasses[1]} />
-                    <box className={cellClasses[2]} />
-                    <box className={cellClasses[3]} />
+                    <box cssClasses={cellClasses[0]} />
+                    <box cssClasses={cellClasses[1]} />
+                    <box cssClasses={cellClasses[2]} />
+                    <box cssClasses={cellClasses[3]} />
                 </box>
                 <label
-                    className="battery__glyph"
+                    cssClasses={["battery__glyph"]}
                     label={glyph}
                     halign={Gtk.Align.CENTER}
                     valign={Gtk.Align.CENTER}

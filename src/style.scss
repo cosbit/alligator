@@ -1,3 +1,4 @@
+@use "./styles/tokens" as tokens;
 @use "./styles/bar" as bar;
 @use "./widget/clock/style" as clock;
 @use "./widget/date/style" as date;
@@ -7,60 +8,36 @@
 $fg-color: #{"@theme_fg_color"};
 $bg-color: #{"@theme_bg_color"};
 
-* {
-    all: unset;
-    --bar-width: 360px;
-    --tile-unit: 96px;
-    --tile-gutter: 12px;
-    --gb-bg: #282828;
-    --gb-bg-soft: #32302f;
-    --gb-bg-hard: #1d2021;
-    --gb-fg: #ebdbb2;
-    --gb-fg-soft: #d5c4a1;
-    --gb-fg-muted: #bdae93;
-    --gb-selection: #3c3836;
-    --gb-accent-active: #fabd2f;
-    --gb-accent-inactive: #7c6f64;
-    --gb-red: #cc241d;
-    --gb-green: #98971a;
-    --gb-yellow: #d79921;
-    --gb-blue: #458588;
-    --gb-purple: #b16286;
-    --gb-aqua: #689d6a;
-    --gb-orange: #d65d0e;
-    --gb-gray: #928374;
-    --gb-light-bg: #fbf1c7;
-    --gb-light-fg: #3c3836;
-}
+// * {
+//     all: unset;
+// }
 
 .tile {
-    --tile-width: var(--tile-unit);
-    --tile-height: var(--tile-unit);
-    min-width: var(--tile-width);
-    min-height: var(--tile-height);
+    min-width: tokens.$tile-unit;
+    min-height: tokens.$tile-unit;
 }
 
 .tile--square {
-    --tile-width: var(--tile-unit);
-    --tile-height: var(--tile-unit);
+    min-width: tokens.$tile-unit;
+    min-height: tokens.$tile-unit;
 }
 
 .tile--horizontal {
-    --tile-width: calc((var(--tile-unit) * 2) + var(--tile-gutter));
-    --tile-height: var(--tile-unit);
+    min-width: tokens.$tile-unit * 2 + tokens.$tile-gutter;
+    min-height: tokens.$tile-unit;
 }
 
 .tile--vertical {
-    --tile-width: var(--tile-unit);
-    --tile-height: calc((var(--tile-unit) * 2) + var(--tile-gutter));
+    min-width: tokens.$tile-unit;
+    min-height: tokens.$tile-unit * 2 + tokens.$tile-gutter;
 }
 
 .tile--dark {
-    background-color: var(--gb-bg);
-    color: var(--gb-fg);
+    background-color: tokens.$gb-bg;
+    color: tokens.$gb-fg;
 }
 
 .tile--light {
-    background-color: var(--gb-light-bg);
-    color: var(--gb-light-fg);
+    background-color: tokens.$gb-light-bg;
+    color: tokens.$gb-light-fg;
 }

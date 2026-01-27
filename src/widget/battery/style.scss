@@ -1,3 +1,5 @@
+@use "../../styles/tokens" as tokens;
+
 .tile--battery {
     border-radius: 18px;
 }
@@ -11,23 +13,23 @@
     min-width: 12px;
     min-height: 22px;
     border-radius: 3px;
-    background-color: var(--gb-bg);
-    border: 2px solid var(--gb-bg-hard);
+    background-color: tokens.$gb-bg;
+    border: 2px solid tokens.$gb-bg-hard;
 }
 
 .battery__cell--active {
-    background-color: var(--gb-green);
-    border-color: var(--gb-green);
+    background-color: tokens.$gb-green;
+    border-color: tokens.$gb-green;
 }
 
 .battery__cell--warning {
-    background-color: var(--gb-yellow);
-    border-color: var(--gb-yellow);
+    background-color: tokens.$gb-yellow;
+    border-color: tokens.$gb-yellow;
 }
 
 .battery__cell--inactive {
-    background-color: var(--gb-bg);
-    border-color: var(--gb-bg-hard);
+    background-color: tokens.$gb-bg;
+    border-color: tokens.$gb-bg-hard;
 }
 
 .battery__glyph {

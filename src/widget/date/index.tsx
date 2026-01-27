@@ -27,7 +27,7 @@ export default function DateTile() {
 
     return (
         <box
-            className="tile tile--square tile--date tile--dark"
+            cssClasses={["tile", "tile--square", "tile--date", "tile--dark"]}
             halign={Gtk.Align.CENTER}
             valign={Gtk.Align.CENTER}
             hexpand={false}
@@ -42,7 +42,7 @@ export default function DateTile() {
                 vexpand={false}
             >
                 <label
-                    className="date__day"
+                    cssClasses={["date__day"]}
                     label={dayLabel}
                     halign={Gtk.Align.CENTER}
                     valign={Gtk.Align.CENTER}
@@ -50,7 +50,7 @@ export default function DateTile() {
                     vexpand={false}
                 />
                 <label
-                    className="date__full"
+                    cssClasses={["date__full"]}
                     label={dateLabel}
                     halign={Gtk.Align.CENTER}
                     valign={Gtk.Align.CENTER}

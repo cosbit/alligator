@@ -1,3 +1,3 @@
 export default function StorageTile() {
-    return <box className="tile tile--storage" />
+    return <box cssClasses={["tile", "tile--storage"]} />
 }

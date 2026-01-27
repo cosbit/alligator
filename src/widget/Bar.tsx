@@ -9,7 +9,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
 
     return <window
         name="sidebar"
-        className="Bar"
+        cssClasses={["Bar"]}
         gdkmonitor={gdkmonitor}
         visible={true}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
@@ -18,9 +18,9 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
         application={app}
         setup={self => app.add_window(self)}
         >
-        <box className="bar__inner" vertical spacing={tileGutter}>
+        <box cssClasses={["bar__inner"]} vertical spacing={tileGutter}>
             <box
-                className="bar__row bar__row--pair"
+                cssClasses={["bar__row", "bar__row--pair"]}
                 halign={Gtk.Align.CENTER}
                 spacing={tileGutter}
             >
@@ -28,33 +28,33 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
                 <DateTile/>
             </box>
             <box
-                className="bar__row bar__row--single"
+                cssClasses={["bar__row", "bar__row--single"]}
                 halign={Gtk.Align.CENTER}
             >
-                <box className="tile tile--horizontal tile--dark" />
+                <box cssClasses={["tile", "tile--horizontal", "tile--dark"]} />
             </box>
             <box
-                className="bar__row bar__row--split"
+                cssClasses={["bar__row", "bar__row--split"]}
                 halign={Gtk.Align.CENTER}
                 spacing={tileGutter}
             >
-                <box className="tile tile--vertical tile--dark" />
-                <box className="bar__column bar__column--stack" vertical spacing={tileGutter}>
+                <box cssClasses={["tile", "tile--vertical", "tile--dark"]} />
+                <box cssClasses={["bar__column", "bar__column--stack"]} vertical spacing={tileGutter}>
                     <BatteryTile/>
-                    <box className="tile tile--square tile--dark" />
+                    <box cssClasses={["tile", "tile--square", "tile--dark"]} />
                 </box>
             </box>
             <box
-                className="bar__row bar__row--single"
+                cssClasses={["bar__row", "bar__row--single"]}
                 halign={Gtk.Align.CENTER}
             >
-                <box className="tile tile--horizontal tile--dark" />
+                <box cssClasses={["tile", "tile--horizontal", "tile--dark"]} />
             </box>
             <box
-                className="bar__row bar__row--single"
+                cssClasses={["bar__row", "bar__row--single"]}
                 halign={Gtk.Align.CENTER}
             >
-                <box className="tile tile--square tile--dark" />
+                <box cssClasses={["tile", "tile--square", "tile--dark"]} />
             </box>
         </box>
     </window>
