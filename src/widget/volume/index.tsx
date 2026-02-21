@@ -6,8 +6,11 @@ import "./style.scss"
 const ICON_DIR = `${SRC}/icons`
 const OUTPUT_TARGET = "@DEFAULT_AUDIO_SINK@"
 const INPUT_TARGET = "@DEFAULT_AUDIO_SOURCE@"
-const HORIZONTAL_TILE_WIDTH = 224
-const DEVICE_SELECTOR_WIDTH = Math.floor(HORIZONTAL_TILE_WIDTH * 0.5)
+const HORIZONTAL_TILE_WIDTH = 220
+const HEADER_ROW_SPACING = 6
+const HEADER_BUTTON_WIDTH = 28
+const DEVICE_SELECTOR_WIDTH =
+    HORIZONTAL_TILE_WIDTH - HEADER_BUTTON_WIDTH * 2 - HEADER_ROW_SPACING * 2 - 16
 const SLIDER_WIDTH = Math.floor(HORIZONTAL_TILE_WIDTH * 0.8)
 
 const splitClasses = (value: string) =>
@@ -316,6 +319,7 @@ export default function VolumeTile() {
         >
             <box
                 vertical
+                cssClasses={["volume__inner"]}
                 spacing={6}
                 halign={Gtk.Align.CENTER}
                 valign={Gtk.Align.END}
@@ -324,14 +328,15 @@ export default function VolumeTile() {
             >
                 <box
                     cssClasses={["volume__header-row"]}
-                    spacing={6}
-                    halign={Gtk.Align.FILL}
-                    hexpand
+                    spacing={HEADER_ROW_SPACING}
+                    halign={Gtk.Align.CENTER}
+                    valign={Gtk.Align.END}
+                    hexpand={false}
                 >
                     <menubutton
                         cssClasses={["volume__device-button"]}
                         popover={sinkPopover}
-                        halign={Gtk.Align.START}
+                        halign={Gtk.Align.CENTER}
                         widthRequest={DEVICE_SELECTOR_WIDTH}
                         hexpand={false}
                         sensitive={outputAvailable}
@@ -353,6 +358,7 @@ export default function VolumeTile() {
                     </menubutton>
                     <button
                         cssClasses={outputMuteClasses}
+                        widthRequest={HEADER_BUTTON_WIDTH}
                         sensitive={outputAvailable}
                         onClicked={() => toggleMute(OUTPUT_TARGET)}
                     >
@@ -360,6 +366,7 @@ export default function VolumeTile() {
                     </button>
                     <button
                         cssClasses={micMuteClasses}
+                        widthRequest={HEADER_BUTTON_WIDTH}
                         sensitive={micAvailable}
                         onClicked={() => toggleMute(INPUT_TARGET)}
                     >
@@ -369,8 +376,8 @@ export default function VolumeTile() {
                 <box
                     cssClasses={["volume__controls"]}
                     spacing={6}
-                    halign={Gtk.Align.FILL}
-                    hexpand
+                    halign={Gtk.Align.CENTER}
+                    hexpand={false}
                 >
                     <box
                         cssClasses={["volume__slider-row"]}
