@@ -1,11 +1,7 @@
 @use "../../styles/tokens" as tokens;
 
-.tile--volume {
-    padding: tokens.$space-md 0;
-}
-
 .volume__inner {
-    margin-left: 5px;
+    margin-left: 0;
 }
 
 .volume__device-button {
@@ -16,7 +12,7 @@
 
 .volume__device-button > button {
     min-height: 28px;
-    padding: 0 tokens.$space-sm;
+    padding: 0 tokens.$space-xs;
     border: 2px solid tokens.$gb-orange;
     border-radius: 7px;
     background-image: none;
@@ -69,8 +65,8 @@
 }
 
 .volume__button {
-    min-width: 28px;
-    min-height: 28px;
+    min-width: 26px;
+    min-height: 26px;
     padding: 0;
     margin: 0;
     border-radius: 7px;
@@ -103,6 +99,23 @@
     background-image: none;
     background-color: #3f2220;
     color: tokens.$gb-fg;
+}
+
+.volume__actions-row .volume__button {
+    min-width: 24px;
+    min-height: 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+.volume__actions-row .volume__button--muted {
+    border: none;
+}
+
+.volume__actions-row .volume__icon {
+    min-width: 12px;
+    min-height: 12px;
 }
 
 .volume__menu-popover {

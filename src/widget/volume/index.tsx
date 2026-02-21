@@ -7,10 +7,9 @@ const ICON_DIR = `${SRC}/icons`
 const OUTPUT_TARGET = "@DEFAULT_AUDIO_SINK@"
 const INPUT_TARGET = "@DEFAULT_AUDIO_SOURCE@"
 const HORIZONTAL_TILE_WIDTH = 220
-const SLIDER_WIDTH = Math.floor(HORIZONTAL_TILE_WIDTH * 0.8)
-const DEVICE_SELECTOR_WIDTH = SLIDER_WIDTH
-const CONTROL_BUTTON_WIDTH = 28
-const CONTROL_ROW_SPACING = 6
+const ROW_CONTENT_WIDTH = Math.floor(HORIZONTAL_TILE_WIDTH * 0.7)
+const ROW_SPACING = 0
+const CONTROL_ROW_SPACING = 4
 
 const splitClasses = (value: string) =>
     value.trim().split(/\s+/).filter(Boolean)
@@ -27,7 +26,7 @@ type SinkInfo = {
     isDefault: boolean
 }
 
-function truncateDeviceName(value: string, maxChars = 8) {
+function truncateDeviceName(value: string, maxChars = 7) {
     const label = value.trim()
     if (label.length <= maxChars) {
         return label
@@ -322,35 +321,38 @@ export default function VolumeTile() {
             valign={Gtk.Align.END}
             hexpand={false}
             vexpand={false}
+            homogeneous
         >
             <box
                 vertical
                 cssClasses={["volume__inner"]}
-                spacing={6}
+                spacing={ROW_SPACING}
                 halign={Gtk.Align.CENTER}
                 valign={Gtk.Align.END}
+                widthRequest={ROW_CONTENT_WIDTH}
                 hexpand={false}
+                homogeneous
                 vexpand={false}
             >
                 <box
                     cssClasses={["volume__header-row"]}
                     halign={Gtk.Align.CENTER}
                     valign={Gtk.Align.END}
+                    widthRequest={ROW_CONTENT_WIDTH}
                     hexpand={false}
                 >
                     <menubutton
                         cssClasses={["volume__device-button"]}
                         popover={sinkPopover}
-                        halign={Gtk.Align.CENTER}
-                        widthRequest={DEVICE_SELECTOR_WIDTH}
-                        hexpand={false}
+                        halign={Gtk.Align.FILL}
+                        hexpand
                         sensitive={outputAvailable}
                     >
                         <box
                             cssClasses={["volume__device"]}
                             spacing={6}
                             halign={Gtk.Align.FILL}
-                            hexpand={false}
+                            hexpand
                         >
                             <label
                                 cssClasses={["volume__device-label"]}
@@ -364,16 +366,16 @@ export default function VolumeTile() {
                 </box>
                 <box
                     cssClasses={["volume__controls"]}
-                    spacing={6}
+                    spacing={ROW_SPACING}
                     halign={Gtk.Align.CENTER}
+                    widthRequest={ROW_CONTENT_WIDTH}
                     hexpand={false}
                 >
                     <box
                         cssClasses={["volume__slider-row"]}
-                        spacing={6}
-                        halign={Gtk.Align.START}
-                        widthRequest={SLIDER_WIDTH}
-                        hexpand={false}
+                        spacing={ROW_SPACING}
+                        halign={Gtk.Align.FILL}
+                        hexpand
                     >
                         <slider
                             cssClasses={["volume__slider"]}
@@ -404,12 +406,13 @@ export default function VolumeTile() {
                     cssClasses={["volume__actions-row"]}
                     spacing={CONTROL_ROW_SPACING}
                     halign={Gtk.Align.CENTER}
-                    widthRequest={SLIDER_WIDTH}
+                    widthRequest={ROW_CONTENT_WIDTH}
                     hexpand={false}
+                    homogeneous
                 >
                     <button
                         cssClasses={outputMuteClasses}
-                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        hexpand
                         sensitive={outputAvailable}
                         onClicked={() => toggleMute(OUTPUT_TARGET)}
                     >
@@ -417,7 +420,7 @@ export default function VolumeTile() {
                     </button>
                     <button
                         cssClasses={micMuteClasses}
-                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        hexpand
                         sensitive={micAvailable}
                         onClicked={() => toggleMute(INPUT_TARGET)}
                     >
@@ -425,21 +428,21 @@ export default function VolumeTile() {
                     </button>
                     <button
                         cssClasses={["volume__button"]}
-                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        hexpand
                         onClicked={() => runMediaCommand("previous")}
                     >
                         {previousIcon}
                     </button>
                     <button
                         cssClasses={["volume__button"]}
-                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        hexpand
                         onClicked={() => runMediaCommand("pause")}
                     >
                         {pauseIcon}
                     </button>
                     <button
                         cssClasses={["volume__button"]}
-                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        hexpand
                         onClicked={() => runMediaCommand("play")}
                     >
                         {playIcon}

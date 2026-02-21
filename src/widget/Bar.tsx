@@ -48,12 +48,14 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
             <box /** Fourth row (wide); display & brightness */
                 cssClasses={["bar__row", "bar__row--single"]}
                 halign={Gtk.Align.CENTER}
+                spacing={tileGutter}
             >
                 <box cssClasses={["tile", "tile--horizontal", "tile--dark"]} />
             </box>
             <box /** Fith row; network & devices */
                 cssClasses={["bar__row", "bar__row--pair"]}
                 halign={Gtk.Align.CENTER}
+                spacing={tileGutter}
             >
                 <box cssClasses={["tile", "tile--square", "tile--dark"]} />
                 <box cssClasses={["tile", "tile--square", "tile--dark"]} />
