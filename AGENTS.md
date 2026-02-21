@@ -1265,3 +1265,8 @@ event controller.
 - `src/widget/Bar.tsx` now renders the volume tile in the second-row horizontal slot.
 - `src/style.scss` now imports the volume tile stylesheet with a unique Sass namespace.
 - `src/widget/volume/index.tsx` now uses `.get()` for non-binding reads (initial adjustment value and sink menu rebuild) to avoid passing undefined into GTK object initializers.
+- `src/widget/volume/index.tsx` now uses Astal's intrinsic `<slider>` widget (instead of `<scale>`/`<Gtk.Scale>`) so JSX resolves a supported ctor in `astal/gtk4` and avoids undefined-ctor runtime crashes.
+- `src/widget/volume/index.tsx` now truncates the displayed default output label to 8 characters plus `...` (e.g., `Audio He...`) to keep the horizontal tile from growing too wide.
+- `src/widget/volume/index.tsx` now constrains the device selector button width to 80% of the horizontal tile (using a 224px tile reference), preventing long output labels from widening the tile.
+- `src/widget/volume/index.tsx` now sets the device selector button width to a fixed 80px so dropdown label width cannot expand the tile.
+- `src/widget/volume/index.tsx` now uses a two-row layout where the header row contains the device selector plus output/mic mute buttons, while the second row keeps the slider and percent label together; widths are constrained to 70% for device selector and 80% for slider-row content using the 224px horizontal tile reference.
