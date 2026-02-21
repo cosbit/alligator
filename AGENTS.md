@@ -1283,3 +1283,6 @@ event controller.
 - `src/widget/volume/style.scss` now explicitly disables GTK theme `background-image` layers on the menubutton's internal button node and on mute/mic buttons (including hover/active/disabled) so dark backgrounds are not washed out by default white gradient fills.
 - `src/widget/volume/style.scss` now applies the same `background-image: none` override pattern to popover sink-selector buttons (`.volume__menu-item`, including hover/active/checked/disabled and active-item class) to prevent white default button gradients in the menu.
 - `src/widget/volume/style.scss` now styles the volume slider with a taller trough (`12px`), orange border on highlighted/fill track segments, and a hidden GTK slider handle (`slider` node set transparent/zero-size/opacity 0) so only the themed bar is visible.
+- `src/widget/volume/index.tsx` now uses a three-row layout: row 1 contains only the output device menu button, row 2 contains the volume slider + percent label, and row 3 contains control buttons.
+- `src/widget/volume/index.tsx` now adds media transport buttons (previous, pause, play) in the new third row, wired to `playerctl` commands via `runMediaCommand(...)`.
+- `src/widget/volume/index.tsx` now places mute and mic-mute buttons in the third row beside transport controls and uses a shared 28px control-button width constant for the entire action row.

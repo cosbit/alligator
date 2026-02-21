@@ -7,11 +7,10 @@ const ICON_DIR = `${SRC}/icons`
 const OUTPUT_TARGET = "@DEFAULT_AUDIO_SINK@"
 const INPUT_TARGET = "@DEFAULT_AUDIO_SOURCE@"
 const HORIZONTAL_TILE_WIDTH = 220
-const HEADER_ROW_SPACING = 6
-const HEADER_BUTTON_WIDTH = 28
-const DEVICE_SELECTOR_WIDTH =
-    HORIZONTAL_TILE_WIDTH - HEADER_BUTTON_WIDTH * 2 - HEADER_ROW_SPACING * 2 - 16
 const SLIDER_WIDTH = Math.floor(HORIZONTAL_TILE_WIDTH * 0.8)
+const DEVICE_SELECTOR_WIDTH = SLIDER_WIDTH
+const CONTROL_BUTTON_WIDTH = 28
+const CONTROL_ROW_SPACING = 6
 
 const splitClasses = (value: string) =>
     value.trim().split(/\s+/).filter(Boolean)
@@ -255,6 +254,10 @@ function setDefaultSink(id: number) {
     runCommand(`wpctl set-default ${id}`)
 }
 
+function runMediaCommand(action: "previous" | "pause" | "play") {
+    runCommand(`playerctl ${action}`)
+}
+
 export default function VolumeTile() {
     const outputState = createVolumePoll(OUTPUT_TARGET)
     const micState = createVolumePoll(INPUT_TARGET)
@@ -308,6 +311,9 @@ export default function VolumeTile() {
     const volumeIcon = createIconWidget("mute.svg", "audio-volume-high-symbolic")
     const micIcon = createIconWidget("microphone.svg", "microphone-sensitivity-high-symbolic")
     const caretIcon = createIconWidget("chevron.svg", "pan-down-symbolic")
+    const previousIcon = createIconWidget("previous.svg", "media-skip-backward-symbolic")
+    const pauseIcon = createIconWidget("pause.svg", "media-playback-pause-symbolic")
+    const playIcon = createIconWidget("play.svg", "media-playback-start-symbolic")
 
     return (
         <box
@@ -328,7 +334,6 @@ export default function VolumeTile() {
             >
                 <box
                     cssClasses={["volume__header-row"]}
-                    spacing={HEADER_ROW_SPACING}
                     halign={Gtk.Align.CENTER}
                     valign={Gtk.Align.END}
                     hexpand={false}
@@ -356,22 +361,6 @@ export default function VolumeTile() {
                             {caretIcon}
                         </box>
                     </menubutton>
-                    <button
-                        cssClasses={outputMuteClasses}
-                        widthRequest={HEADER_BUTTON_WIDTH}
-                        sensitive={outputAvailable}
-                        onClicked={() => toggleMute(OUTPUT_TARGET)}
-                    >
-                        {volumeIcon}
-                    </button>
-                    <button
-                        cssClasses={micMuteClasses}
-                        widthRequest={HEADER_BUTTON_WIDTH}
-                        sensitive={micAvailable}
-                        onClicked={() => toggleMute(INPUT_TARGET)}
-                    >
-                        {micIcon}
-                    </button>
                 </box>
                 <box
                     cssClasses={["volume__controls"]}
@@ -410,6 +399,51 @@ export default function VolumeTile() {
                             xalign={1}
                         />
                     </box>
+                </box>
+                <box
+                    cssClasses={["volume__actions-row"]}
+                    spacing={CONTROL_ROW_SPACING}
+                    halign={Gtk.Align.CENTER}
+                    widthRequest={SLIDER_WIDTH}
+                    hexpand={false}
+                >
+                    <button
+                        cssClasses={outputMuteClasses}
+                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        sensitive={outputAvailable}
+                        onClicked={() => toggleMute(OUTPUT_TARGET)}
+                    >
+                        {volumeIcon}
+                    </button>
+                    <button
+                        cssClasses={micMuteClasses}
+                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        sensitive={micAvailable}
+                        onClicked={() => toggleMute(INPUT_TARGET)}
+                    >
+                        {micIcon}
+                    </button>
+                    <button
+                        cssClasses={["volume__button"]}
+                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        onClicked={() => runMediaCommand("previous")}
+                    >
+                        {previousIcon}
+                    </button>
+                    <button
+                        cssClasses={["volume__button"]}
+                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        onClicked={() => runMediaCommand("pause")}
+                    >
+                        {pauseIcon}
+                    </button>
+                    <button
+                        cssClasses={["volume__button"]}
+                        widthRequest={CONTROL_BUTTON_WIDTH}
+                        onClicked={() => runMediaCommand("play")}
+                    >
+                        {playIcon}
+                    </button>
                 </box>
             </box>
         </box>
