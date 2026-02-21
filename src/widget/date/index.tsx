@@ -35,7 +35,7 @@ export default function DateTile() {
         >
             <box
                 vertical
-                spacing={4}
+                spacing={5}
                 halign={Gtk.Align.CENTER}
                 valign={Gtk.Align.CENTER}
                 hexpand={false}

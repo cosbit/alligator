@@ -180,7 +180,7 @@ export default function BatteryTile() {
         >
             <box
                 cssClasses={["battery__content"]}
-                spacing={6}
+                spacing={5}
                 halign={Gtk.Align.CENTER}
                 valign={Gtk.Align.CENTER}
                 hexpand={false}
@@ -188,7 +188,7 @@ export default function BatteryTile() {
             >
                 <box
                     cssClasses={["battery__cells"]}
-                    spacing={4}
+                    spacing={5}
                     halign={Gtk.Align.CENTER}
                     valign={Gtk.Align.CENTER}
                     hexpand={false}
