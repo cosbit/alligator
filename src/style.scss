@@ -15,6 +15,7 @@ $bg-color: #{"@theme_bg_color"};
 .tile {
     min-width: tokens.$tile-unit;
     min-height: tokens.$tile-unit;
+    border-radius: 9px;
 }
 
 .tile--square {

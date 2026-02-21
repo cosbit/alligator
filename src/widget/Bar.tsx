@@ -5,7 +5,7 @@ import BatteryTile from "./battery"
 
 export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
-    const tileGutter = 12
+    const tileGutter = 8
 
     return <window
         name="sidebar"

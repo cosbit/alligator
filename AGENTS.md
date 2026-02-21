@@ -1246,6 +1246,8 @@ event controller.
 - `src/widget/clock/index.tsx` plus `src/widget/clock/style.scss` can allow the clock label’s natural width to exceed `$tile-unit`, so square tiles may grow horizontally unless the label typography is tightened or the tile/label width is constrained.
 - `src/widget/clock/style.scss` now reduces the clock time font size and letter spacing with tighter margins to keep the time label within the square tile width.
 - `src/widget/date/index.tsx` and `src/widget/battery/index.tsx` now set tile-internal box spacing to 5px between child elements.
+- `src/widget/Bar.tsx` now uses an 8px tile gutter to tighten spacing between tiles inside the bar layout.
+- `src/style.scss` now applies a 9px border radius to `.tile` so all tiles share the same rounded edges, and tile-specific border radius rules were removed from `src/widget/clock/style.scss` and `src/widget/date/style.scss`.
 - `src/widget/date/index.tsx` now uses `cssClasses` arrays so tile and label selectors apply in GTK4.
 - `src/widget/battery/index.tsx` now uses `cssClasses` arrays (including Accessor-mapped class lists) so battery cell classes apply in GTK4.
 - `src/widget/power-actions/index.tsx` now uses `cssClasses` arrays for its tile root.
