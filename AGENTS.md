@@ -1260,3 +1260,8 @@ event controller.
 - `src/widget/storage/index.tsx` now uses `cssClasses` arrays for its tile root.
 - `src/widget/network/index.tsx` now uses `cssClasses` arrays for its tile root.
 - `src/widget/battery/index.tsx` now maps battery cell class strings to string arrays via `Binding.as(...)` so `cssClasses` bindings stay reactive without calling bindings as functions.
+- `src/widget/volume/index.tsx` now implements a horizontal volume tile with live `wpctl` polling for output/input volume, mute toggles, and a sink selection popover plus defensive try/catch handling.
+- `src/widget/volume/style.scss` defines the volume tile’s typography, button styling, and popover menu spacing.
+- `src/widget/Bar.tsx` now renders the volume tile in the second-row horizontal slot.
+- `src/style.scss` now imports the volume tile stylesheet with a unique Sass namespace.
+- `src/widget/volume/index.tsx` now uses `.get()` for non-binding reads (initial adjustment value and sink menu rebuild) to avoid passing undefined into GTK object initializers.
