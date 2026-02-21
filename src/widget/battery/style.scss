@@ -5,8 +5,8 @@
 }
 
 .battery__cells {
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: tokens.$space-xs;
+    margin-bottom: tokens.$space-xs;
 }
 
 .battery__cell {
@@ -36,5 +36,5 @@
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.4px;
-    margin-top: 1px;
+    margin-top: tokens.$space-xs;
 }

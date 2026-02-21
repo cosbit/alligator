@@ -1248,6 +1248,9 @@ event controller.
 - `src/widget/date/index.tsx` and `src/widget/battery/index.tsx` now set tile-internal box spacing to 5px between child elements.
 - `src/widget/Bar.tsx` now uses an 8px tile gutter to tighten spacing between tiles inside the bar layout.
 - `src/style.scss` now applies a 9px border radius to `.tile` so all tiles share the same rounded edges, and tile-specific border radius rules were removed from `src/widget/clock/style.scss` and `src/widget/date/style.scss`.
+- `src/styles/_tokens.scss` now defines shared spacing tokens, and `src/styles/bar.scss` plus tile styles in `src/widget/clock/style.scss`, `src/widget/date/style.scss`, and `src/widget/battery/style.scss` now use those tokens so margin/padding values stay consistent with the clock/date tile spacing scale.
+- `src/styles/bar.scss` now uses the 10px spacing token for `.bar__inner` padding to tighten the outer padding around the tile grid.
+- `src/styles/_tokens.scss` now sets `$tile-unit` to 106px, making all tiles 5px larger per side.
 - `src/widget/date/index.tsx` now uses `cssClasses` arrays so tile and label selectors apply in GTK4.
 - `src/widget/battery/index.tsx` now uses `cssClasses` arrays (including Accessor-mapped class lists) so battery cell classes apply in GTK4.
 - `src/widget/power-actions/index.tsx` now uses `cssClasses` arrays for its tile root.
