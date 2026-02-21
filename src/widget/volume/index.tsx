@@ -305,8 +305,8 @@ export default function VolumeTile() {
     updateSinkMenu(sinks.get())
     sinks.subscribe(updateSinkMenu)
 
-    const volumeIcon = createIconWidget("volume.svg", "audio-volume-high-symbolic")
-    const micIcon = createIconWidget("mic.svg", "microphone-sensitivity-high-symbolic")
+    const volumeIcon = createIconWidget("mute.svg", "audio-volume-high-symbolic")
+    const micIcon = createIconWidget("microphone.svg", "microphone-sensitivity-high-symbolic")
     const caretIcon = createIconWidget("chevron.svg", "pan-down-symbolic")
 
     return (

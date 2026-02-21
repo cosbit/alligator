@@ -5,15 +5,46 @@
 }
 
 .volume__inner {
-    margin-left: 8px;
+    margin-left: 5px;
 }
 
 .volume__device-button {
-    padding: 0;
     margin: 0;
-    background: transparent;
-    border: none;
+    padding: 0;
+    color: tokens.$gb-fg;
+}
+
+.volume__device-button > button {
+    min-height: 28px;
+    padding: 0 tokens.$space-sm;
+    border: 2px solid tokens.$gb-orange;
+    border-radius: 7px;
+    background-image: none;
+    background-color: tokens.$gb-bg;
+    color: tokens.$gb-fg;
     box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.volume__device-button > button:hover {
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+}
+
+.volume__device-button > button:active,
+.volume__device-button > button:checked {
+    background-image: none;
+    background-color: tokens.$gb-selection;
+}
+
+.volume__device-button > button:disabled {
+    background-image: none;
+    opacity: 0.55;
+}
+
+.volume__device {
+    color: tokens.$gb-fg;
 }
 
 .volume__device-label {
@@ -21,7 +52,7 @@
     letter-spacing: 0.4px;
     font-weight: 600;
     font-family: "Merchant";
-    color: tokens.$gb-fg-soft;
+    color: tokens.$gb-fg;
 }
 
 .volume__icon {
@@ -33,7 +64,8 @@
     font-size: 11px;
     letter-spacing: 0.3px;
     font-family: "Merchant";
-    opacity: 0.8;
+    color: tokens.$gb-fg;
+    opacity: 0.9;
 }
 
 .volume__button {
@@ -42,31 +74,126 @@
     padding: 0;
     margin: 0;
     border-radius: 7px;
-    border: none;
-    background-color: tokens.$gb-selection;
+    border: 2px solid tokens.$gb-orange;
+    background-image: none;
+    background-color: tokens.$gb-bg;
+    color: tokens.$gb-fg;
     box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.volume__button:hover {
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+}
+
+.volume__button:active {
+    background-image: none;
+    background-color: tokens.$gb-selection;
+}
+
+.volume__button:disabled {
+    background-image: none;
+    opacity: 0.55;
 }
 
 .volume__button--muted {
-    background-color: tokens.$gb-red;
-    color: tokens.$gb-light-fg;
+    border-color: tokens.$gb-red;
+    background-image: none;
+    background-color: #3f2220;
+    color: tokens.$gb-fg;
+}
+
+.volume__menu-popover {
+    border: 2px solid tokens.$gb-orange;
+    border-radius: 8px;
+    background-color: tokens.$gb-bg;
+    color: tokens.$gb-fg;
+    box-shadow: none;
+}
+
+.volume__menu-popover contents {
+    padding: 0;
+    border-radius: 6px;
+    background-color: tokens.$gb-bg;
 }
 
 .volume__menu {
     padding: tokens.$space-sm;
+    background-color: transparent;
 }
 
 .volume__menu-item {
     padding: tokens.$space-xs tokens.$space-sm;
-    background: transparent;
+    border: 1px solid transparent;
     border-radius: 6px;
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+    color: tokens.$gb-fg;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.volume__menu-item:hover {
+    border-color: tokens.$gb-orange;
+    background-image: none;
+    background-color: tokens.$gb-selection;
+}
+
+.volume__menu-item:active,
+.volume__menu-item:checked {
+    border-color: tokens.$gb-orange;
+    background-image: none;
+    background-color: tokens.$gb-selection;
 }
 
 .volume__menu-item--active {
-    background-color: tokens.$gb-selection;
+    border-color: tokens.$gb-orange;
+    background-image: none;
+    background-color: rgba(tokens.$gb-orange, 0.18);
+}
+
+.volume__menu-item:disabled {
+    background-image: none;
+    opacity: 0.55;
 }
 
 .volume__menu-empty {
     padding: tokens.$space-xs tokens.$space-sm;
+    color: tokens.$gb-fg;
     opacity: 0.7;
+}
+
+.volume__slider trough {
+    min-height: 12px;
+    border: 1px solid tokens.$gb-selection;
+    border-radius: 999px;
+    background-color: tokens.$gb-bg-soft;
+}
+
+.volume__slider trough highlight,
+.volume__slider trough fill,
+.volume__slider highlight,
+.volume__slider fill {
+    border: 1px solid tokens.$gb-orange;
+    border-radius: 999px;
+    background-color: tokens.$gb-orange;
+}
+
+.volume__slider slider {
+    min-width: 0;
+    min-height: 0;
+    border: none;
+    border-radius: 999px;
+    background-color: transparent;
+    background-image: none;
+    opacity: 0;
+    box-shadow: none;
+}
+
+.volume__slider slider:hover {
+    background-color: transparent;
+    background-image: none;
+    opacity: 0;
 }
