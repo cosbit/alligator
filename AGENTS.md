@@ -1243,6 +1243,9 @@ event controller.
 - `src/widget/battery/style.scss` now consumes Sass tokens for battery cell colors instead of CSS custom properties.
 - `src/widget/Bar.tsx` now uses `cssClasses` arrays instead of `class` so GTK4 widgets receive CSS classes through the Astal runtime.
 - `src/widget/clock/index.tsx` now uses `cssClasses` arrays so tile and label selectors apply in GTK4.
+- `src/widget/date/index.tsx` now lowercases day/date output, splits the date into day/month/year labels for styling, and centers the labels with explicit x-alignment.
+- `src/widget/date/index.tsx` now derives date day/month/year labels directly from the date poll accessor to avoid chaining on non-accessor values.
+- `src/widget/date/style.scss` now styles the date row via `.date__part` and colors `.date__month` with the Gruvbox orange token.
 - `src/widget/clock/index.tsx` plus `src/widget/clock/style.scss` can allow the clock label’s natural width to exceed `$tile-unit`, so square tiles may grow horizontally unless the label typography is tightened or the tile/label width is constrained.
 - `src/widget/clock/style.scss` now reduces the clock time font size and letter spacing with tighter margins to keep the time label within the square tile width.
 - `src/widget/date/index.tsx` and `src/widget/battery/index.tsx` now set tile-internal box spacing to 5px between child elements.

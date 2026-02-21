@@ -22,8 +22,22 @@ function createDatePoll() {
 export default function DateTile() {
     const day = createDayPoll()
     const date = createDatePoll()
-    const dayLabel = day((value) => value.trim())
-    const dateLabel = date((value) => value.trim())
+    const dayLabel = day((value) => value.trim().toLowerCase())
+    const dateDay = date((value) => {
+        const [dayPart] = value.trim().toLowerCase().split(/\s+/)
+        return dayPart ?? ""
+    })
+    const dateMonth = date((value) => {
+        const [, monthPart] = value.trim().toLowerCase().split(/\s+/)
+        return monthPart ?? ""
+    })
+    const dateYear = date((value) => {
+        const parts = value.trim().toLowerCase().split(/\s+/)
+        if (parts.length < 3) {
+            return ""
+        }
+        return parts.slice(2).join(" ")
+    })
 
     return (
         <box
@@ -44,19 +58,32 @@ export default function DateTile() {
                 <label
                     cssClasses={["date__day"]}
                     label={dayLabel}
-                    halign={Gtk.Align.CENTER}
-                    valign={Gtk.Align.CENTER}
                     hexpand={false}
                     vexpand={false}
+                    xalign={0.5}
                 />
-                <label
+                <box
                     cssClasses={["date__full"]}
-                    label={dateLabel}
-                    halign={Gtk.Align.CENTER}
-                    valign={Gtk.Align.CENTER}
+                    spacing={6}
                     hexpand={false}
                     vexpand={false}
-                />
+                >
+                    <label
+                        cssClasses={["date__part"]}
+                        label={dateDay}
+                        xalign={0.5}
+                    />
+                    <label
+                        cssClasses={["date__part", "date__month"]}
+                        label={dateMonth}
+                        xalign={0.5}
+                    />
+                    <label
+                        cssClasses={["date__part"]}
+                        label={dateYear}
+                        xalign={0.5}
+                    />
+                </box>
             </box>
         </box>
     )

@@ -5,11 +5,20 @@
     font-weight: 600;
     letter-spacing: 0.4px;
     margin-top: tokens.$space-lg;
+    margin-left: tokens.$space-md;
 }
 
 .date__full {
+    margin-bottom: tokens.$space-md;
+    margin-left: tokens.$space-md;
+    opacity: 0.85;
+}
+
+.date__part {
     font-size: 12px;
     letter-spacing: 0.6px;
-    margin-bottom: tokens.$space-md;
-    opacity: 0.85;
+}
+
+.date__month {
+    color: tokens.$gb-orange;
 }

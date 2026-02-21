@@ -172,7 +172,7 @@ export default function BatteryTile() {
 
     return (
         <box
-            cssClasses={["tile", "tile--square", "tile--battery", "tile--dark"]}
+            cssClasses={["tile", "tile--square", "tile--battery", "tile--light"]}
             halign={Gtk.Align.CENTER}
             valign={Gtk.Align.CENTER}
             hexpand={false}

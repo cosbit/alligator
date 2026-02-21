@@ -19,7 +19,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
         setup={self => app.add_window(self)}
         >
         <box cssClasses={["bar__inner"]} vertical spacing={tileGutter}>
-            <box
+            <box /** First row; clock and date */
                 cssClasses={["bar__row", "bar__row--pair"]}
                 halign={Gtk.Align.CENTER}
                 spacing={tileGutter}
@@ -27,13 +27,13 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
                 <ClockTile/>
                 <DateTile/>
             </box>
-            <box
+            <box /** Second row (wide); volume  */
                 cssClasses={["bar__row", "bar__row--single"]}
                 halign={Gtk.Align.CENTER}
             >
                 <box cssClasses={["tile", "tile--horizontal", "tile--dark"]} />
             </box>
-            <box
+            <box /** Third row (vertical); decoration, power and actions */
                 cssClasses={["bar__row", "bar__row--split"]}
                 halign={Gtk.Align.CENTER}
                 spacing={tileGutter}
@@ -44,16 +44,17 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
                     <box cssClasses={["tile", "tile--square", "tile--dark"]} />
                 </box>
             </box>
-            <box
+            <box /** Fourth row (wide); display & brightness */
                 cssClasses={["bar__row", "bar__row--single"]}
                 halign={Gtk.Align.CENTER}
             >
                 <box cssClasses={["tile", "tile--horizontal", "tile--dark"]} />
             </box>
-            <box
-                cssClasses={["bar__row", "bar__row--single"]}
+            <box /** Fith row; network & devices */
+                cssClasses={["bar__row", "bar__row--pair"]}
                 halign={Gtk.Align.CENTER}
             >
+                <box cssClasses={["tile", "tile--square", "tile--dark"]} />
                 <box cssClasses={["tile", "tile--square", "tile--dark"]} />
             </box>
         </box>
