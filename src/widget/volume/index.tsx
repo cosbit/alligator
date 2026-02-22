@@ -187,19 +187,13 @@ function createSinksPoll() {
     return createPoll(initial, 5_000, readSinks)
 }
 
-function createIconWidget(fileName: string, fallbackIcon: string) {
+function createIconWidget(fileName: string, fallbackIcon = fileName) {
     const path = `${ICON_DIR}/${fileName}`
-    let icon: Gtk.Widget
+    const icon = fileExists(path)
+        ? Gtk.Image.new_from_file(path)
+        : new Gtk.Image({ iconName: fallbackIcon })
 
-    if (fileExists(path)) {
-        const image = Gtk.Image.new_from_file(path)
-        image.add_css_class("volume__icon")
-        icon = image
-    } else {
-        const image = new Gtk.Image({ iconName: fallbackIcon })
-        image.add_css_class("volume__icon")
-        icon = image
-    }
+    icon.add_css_class("volume__icon")
 
     return icon
 }
@@ -312,12 +306,12 @@ export default function VolumeTile() {
     updateSinkMenu(sinks.get())
     sinks.subscribe(updateSinkMenu)
 
-    const volumeIcon = createIconWidget("mute.svg", "audio-volume-high-symbolic")
-    const micIcon = createIconWidget("microphone.svg", "microphone-sensitivity-muted-symbolic")
-    const caretIcon = createIconWidget("chevron.svg", "pan-down-symbolic")
-    const previousIcon = createIconWidget("previous.svg", "media-seek-backward-symbolic")
-    const pauseIcon = createIconWidget("pause.svg", "media-playback-pause-symbolic")
-    const playIcon = createIconWidget("play.svg", "media-playback-start-symbolic")
+    const caretIcon = createIconWidget("pan-down-symbolic")
+    const volumeIcon = createIconWidget("audio-volume-high-symbolic")
+    const micIcon = createIconWidget("33")
+    const previousIcon = createIconWidget("45")
+    const pauseIcon = createIconWidget("media-playback-pause-symbolic")
+    const playIcon = createIconWidget("media-playback-start-symbolic")
 
     return (
         <box
@@ -421,6 +415,7 @@ export default function VolumeTile() {
                 >
                     <button
                         cssClasses={outputMuteClasses}
+                        tooltipText="Toggle output mute"
                         hexpand
                         sensitive={outputAvailable}
                         onClicked={() => toggleMute(OUTPUT_TARGET)}
@@ -429,6 +424,7 @@ export default function VolumeTile() {
                     </button>
                     <button
                         cssClasses={micMuteClasses}
+                        tooltipText="Toggle microphone mute"
                         hexpand
                         sensitive={micAvailable}
                         onClicked={() => toggleMute(INPUT_TARGET)}
@@ -437,6 +433,7 @@ export default function VolumeTile() {
                     </button>
                     <button
                         cssClasses={["volume__button"]}
+                        tooltipText="Previous track"
                         hexpand
                         onClicked={() => runMediaCommand("previous")}
                     >
@@ -444,6 +441,7 @@ export default function VolumeTile() {
                     </button>
                     <button
                         cssClasses={["volume__button"]}
+                        tooltipText="Pause"
                         hexpand
                         onClicked={() => runMediaCommand("pause")}
                     >
@@ -451,6 +449,7 @@ export default function VolumeTile() {
                     </button>
                     <button
                         cssClasses={["volume__button"]}
+                        tooltipText="Play"
                         hexpand
                         onClicked={() => runMediaCommand("play")}
                     >

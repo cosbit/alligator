@@ -72,7 +72,7 @@ export default function PowerActionsTile() {
                         <image
                             cssClasses={["power-actions__icon"]}
                             iconName="60"
-                            pixelSize={20}
+                            pixelSize={30}
                         />
                     </button>
                     <box hexpand />
@@ -86,7 +86,7 @@ export default function PowerActionsTile() {
                         <image
                             cssClasses={["power-actions__icon"]}
                             iconName="20"
-                            pixelSize={20}
+                            pixelSize={25}
                         />
                     </button>
                 </box>
@@ -108,7 +108,7 @@ export default function PowerActionsTile() {
                         <image
                             cssClasses={["power-actions__icon"]}
                             iconName="262"
-                            pixelSize={20}
+                            pixelSize={25}
                         />
                     </button>
                     <box hexpand />
@@ -130,7 +130,7 @@ export default function PowerActionsTile() {
                         <image
                             cssClasses={["power-actions__icon"]}
                             iconName="310"
-                            pixelSize={20}
+                            pixelSize={25}
                         />
                     </button>
                     <box hexpand />
@@ -144,7 +144,7 @@ export default function PowerActionsTile() {
                         <image
                             cssClasses={["power-actions__icon"]}
                             iconName="66"
-                            pixelSize={20}
+                            pixelSize={25}
                         />
                     </button>
                 </box>
