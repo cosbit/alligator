@@ -408,7 +408,7 @@ function resolveAppIconName(appClass: string, iconTheme: Gtk.IconTheme | null) {
 function createClientIcon(appClass: string, iconTheme: Gtk.IconTheme | null) {
     const icon = new Gtk.Image({
         iconName: resolveAppIconName(appClass, iconTheme),
-        pixelSize: 13,
+        pixelSize: 16,
         tooltipText: appClass,
     })
 
@@ -432,7 +432,7 @@ function rebuildClientIcons(box: Gtk.Box, clientClasses: string[]) {
     if (!clientClasses.length) {
         const icon = new Gtk.Image({
             iconName: "application-x-executable-symbolic",
-            pixelSize: 13,
+            pixelSize: 20,
         })
         icon.add_css_class("display__client-icon")
         icon.add_css_class("display__client-icon--placeholder")
@@ -555,19 +555,19 @@ export default function DisplayTile() {
                         >
                             <image
                                 cssClasses={["display__top-icon"]}
-                                iconName="weather-clear-night-symbolic"
-                                pixelSize={20}
+                                iconName="76"
+                                pixelSize={16}
                             />
                         </button>
                         <button
                             cssClasses={["display__icon-button", "display__icon-button--decorative"]}
-                            tooltipText="Decorative icon"
+                            tooltipText="sexy mode"
                             sensitive={false}
                         >
                             <image
                                 cssClasses={["display__top-icon"]}
-                                iconName="preferences-desktop-display-symbolic"
-                                pixelSize={20}
+                                iconName="142"
+                                pixelSize={16}
                             />
                         </button>
                     </box>
@@ -593,13 +593,13 @@ export default function DisplayTile() {
                     >
                         <image
                             cssClasses={["display__top-icon", "display__top-icon--decorative"]}
-                            iconName="video-display-symbolic"
-                            pixelSize={20}
+                            iconName="183"
+                            pixelSize={16}
                         />
                         <image
                             cssClasses={["display__top-icon", "display__top-icon--decorative"]}
-                            iconName="display-brightness-symbolic"
-                            pixelSize={20}
+                            iconName="81"
+                            pixelSize={16}
                         />
                     </box>
                 </centerbox>
