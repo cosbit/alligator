@@ -10,7 +10,16 @@
 
 .clock__row--top,
 .clock__row--bottom {
-    // min-height: 14px;
+    padding-left: tokens.$space-sm;
+    padding-right: tokens.$space-sm;
+}
+
+.clock__row--top {
+    padding-top: tokens.$space-sm;
+}
+
+.clock__row--bottom {
+    padding-bottom: tokens.$space-sm;
 }
 
 .clock__row--time {

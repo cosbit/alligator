@@ -52,17 +52,17 @@ export default function ClockTile() {
                     >
                         <image
                             cssClasses={["clock__icon", "clock__icon--top"]}
-                            iconName="2"
+                            iconName="36"
                             pixelSize={20}
                         />
                         <image
                             cssClasses={["clock__icon", "clock__icon--top"]}
-                            iconName="20"
+                            iconName="69"
                             pixelSize={20}
                         />
                         <image
                             cssClasses={["clock__icon", "clock__icon--top"]}
-                            iconName="22"
+                            iconName="260"
                             pixelSize={20}
                         />
                     </centerbox>
@@ -92,16 +92,16 @@ export default function ClockTile() {
                 >
                     <image
                         cssClasses={["clock__icon", "clock__icon--bottom"]}
-                        iconName="go-previous-symbolic"
-                        // pixelSize={12}
+                        iconName="317"
+                        pixelSize={20}
                         halign={Gtk.Align.START}
                         valign={Gtk.Align.CENTER}
                     />
                     <box hexpand />
                     <image
                         cssClasses={["clock__icon", "clock__icon--bottom"]}
-                        iconName="go-next-symbolic"
-                        // pixelSize={12}
+                        iconName="309"
+                        pixelSize={20}
                         halign={Gtk.Align.END}
                         valign={Gtk.Align.CENTER}
                     />
