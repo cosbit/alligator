@@ -8,7 +8,7 @@ const TOP_ROW_SLOT_WIDTH = 50
 const BRIGHTNESS_DEVICE = "amdgpu_bl2"
 const BRIGHTNESS_FALLBACK_PERCENT = 50
 const DEBUG_BRIGHTNESS = false
-const BLUE_LIGHT_TOGGLE_COMMAND = "toggle-bluelight"
+const BLUE_LIGHT_TOGGLE_COMMAND = "bash -lc 'toggle-bluelight'"
 
 const splitClasses = (value: string) =>
     value.trim().split(/\s+/).filter(Boolean)
@@ -21,6 +21,11 @@ type BrightnessState = {
 type WorkspaceState = {
     current: number
     total: number
+}
+
+type ClientEntry = {
+    address: string | null
+    appClass: string
 }
 
 function clamp(value: number, min: number, max: number) {
@@ -260,7 +265,20 @@ function readWorkspaceState() {
     return parseWorkspaceState(activeRaw, workspacesRaw)
 }
 
-function parseClientClassesFromJson(output: string) {
+function normalizeHyprAddress(value: string | null) {
+    if (!value) {
+        return null
+    }
+
+    const trimmed = value.trim().toLowerCase()
+    if (!trimmed) {
+        return null
+    }
+
+    return trimmed.startsWith("0x") ? trimmed : `0x${trimmed}`
+}
+
+function parseClientsFromJson(output: string) {
     try {
         const clients = JSON.parse(output)
         if (!Array.isArray(clients)) {
@@ -275,17 +293,28 @@ function parseClientClassesFromJson(output: string) {
                 const className = typeof client?.class === "string"
                     ? client.class.trim()
                     : ""
+                const appClass = initialClass || className
+                const rawAddress = typeof client?.address === "string"
+                    ? client.address
+                    : null
 
-                return initialClass || className
+                if (!appClass) {
+                    return null
+                }
+
+                return {
+                    address: normalizeHyprAddress(rawAddress),
+                    appClass,
+                }
             })
-            .filter(Boolean)
+            .filter((client): client is ClientEntry => client !== null)
     } catch (error) {
         return null
     }
 }
 
-function parseClientClassesFromText(output: string) {
-    const classes: string[] = []
+function parseClientsFromText(output: string) {
+    const clients: ClientEntry[] = []
     const blocks = output.split(/\n\s*\n/)
 
     for (const block of blocks) {
@@ -293,22 +322,27 @@ function parseClientClassesFromText(output: string) {
             continue
         }
 
+        const addressMatch = block.match(/^\s*Window\s+([0-9a-fA-Fx]+)\s*->/m)
+            ?? block.match(/^\s*address:\s*([0-9a-fA-Fx]+)\s*$/m)
         const initialMatch = block.match(/^\s*initialClass:\s*(.+)$/m)
         const classMatch = block.match(/^\s*class:\s*(.+)$/m)
-        const label = (initialMatch?.[1] ?? classMatch?.[1] ?? "").trim()
+        const appClass = (initialMatch?.[1] ?? classMatch?.[1] ?? "").trim()
 
-        if (label) {
-            classes.push(label)
+        if (appClass) {
+            clients.push({
+                address: normalizeHyprAddress(addressMatch?.[1] ?? null),
+                appClass,
+            })
         }
     }
 
-    return classes
+    return clients
 }
 
-function readClientClasses() {
+function readClients() {
     const jsonOutput = safeSpawn("hyprctl clients -j")
     if (jsonOutput) {
-        const parsed = parseClientClassesFromJson(jsonOutput)
+        const parsed = parseClientsFromJson(jsonOutput)
         if (parsed) {
             return parsed
         }
@@ -319,7 +353,7 @@ function readClientClasses() {
         return null
     }
 
-    return parseClientClassesFromText(textOutput)
+    return parseClientsFromText(textOutput)
 }
 
 function unique<T>(items: T[]) {
@@ -417,6 +451,24 @@ function createClientIcon(appClass: string, iconTheme: Gtk.IconTheme | null) {
     return icon
 }
 
+function focusClient(client: ClientEntry) {
+    if (!client.address) {
+        return
+    }
+
+    runCommand(`hyprctl dispatch focuswindow address:${client.address}`)
+}
+
+function createClientIconButton(client: ClientEntry, iconTheme: Gtk.IconTheme | null) {
+    const button = new Gtk.Button({
+        tooltipText: client.appClass,
+    })
+    button.add_css_class("display__client-button")
+    button.connect("clicked", () => focusClient(client))
+    button.set_child(createClientIcon(client.appClass, iconTheme))
+    return button
+}
+
 function clearBoxChildren(box: Gtk.Box) {
     let child = box.get_first_child()
     while (child) {
@@ -426,10 +478,10 @@ function clearBoxChildren(box: Gtk.Box) {
     }
 }
 
-function rebuildClientIcons(box: Gtk.Box, clientClasses: string[]) {
+function rebuildClientIcons(box: Gtk.Box, clients: ClientEntry[]) {
     clearBoxChildren(box)
 
-    if (!clientClasses.length) {
+    if (!clients.length) {
         const icon = new Gtk.Image({
             iconName: "application-x-executable-symbolic",
             pixelSize: 20,
@@ -442,13 +494,12 @@ function rebuildClientIcons(box: Gtk.Box, clientClasses: string[]) {
 
     const iconTheme = getIconTheme()
 
-    for (const appClass of clientClasses) {
-        box.append(createClientIcon(appClass, iconTheme))
+    for (const client of clients) {
+        box.append(createClientIconButton(client, iconTheme))
     }
 }
 
-function toggleBlueLight(enabled: boolean) {
-    void enabled
+function toggleBlueLight() {
     runCommand(BLUE_LIGHT_TOGGLE_COMMAND)
 }
 
@@ -469,7 +520,7 @@ export default function DisplayTile() {
         1_000,
         readWorkspaceState,
     )
-    const clients = createPoll<string[]>(readClientClasses() ?? [], 2_000, readClientClasses)
+    const clients = createPoll<ClientEntry[]>(readClients() ?? [], 2_000, readClients)
     const blueLightEnabled = Variable(false)
     let suppressBrightnessWrites = true
 
@@ -504,8 +555,8 @@ export default function DisplayTile() {
     })
     clientIconsBox.add_css_class("display__clients")
 
-    const refreshClientIcons = (clientClasses = clients.get()) =>
-        rebuildClientIcons(clientIconsBox, clientClasses)
+    const refreshClientIcons = (entries = clients.get()) =>
+        rebuildClientIcons(clientIconsBox, entries)
 
     refreshClientIcons(clients.get())
     clients.subscribe(refreshClientIcons)
@@ -550,7 +601,7 @@ export default function DisplayTile() {
                             onClicked={() => {
                                 const next = !blueLightEnabled.get()
                                 blueLightEnabled.set(next)
-                                toggleBlueLight(next)
+                                toggleBlueLight()
                             }}
                         >
                             <image
