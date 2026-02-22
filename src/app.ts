@@ -4,6 +4,7 @@ import Bar from "./widget/Bar"
 
 App.start({
     css: style,
+    icons: "./icons",
     main() {
         const monitors = App.get_monitors()
         Bar(monitors[0], App)

@@ -1,10 +1,38 @@
 @use "../../styles/tokens" as tokens;
 
+.tile--clock {
+    padding: 0
+}
+
+.clock__row {
+    padding: 0;
+}
+
+.clock__row--top,
+.clock__row--bottom {
+    // min-height: 14px;
+}
+
+.clock__row--time {
+    // min-height: 14px;
+}
+
+.clock__icon {
+    color: tokens.$gb-light-fg;
+    
+}
+
+.clock__icon--top {
+    
+}
+
+.clock__icon--bottom {
+    
+}
+
 .clock__time {
     font-size: 22px;
     font-weight: 600;
     letter-spacing: 0.2px;
-    margin-top: tokens.$space-lg;
-    margin-bottom: tokens.$space-sm;
     font-family: "Merchant";
 }
