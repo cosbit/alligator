@@ -1305,3 +1305,9 @@ event controller.
 - `src/widget/battery/style.scss` now adds a subtle green-tinted drop shadow to non-empty battery cells (`.battery__cell--active` and `.battery__cell--warning`) so filled segments glow slightly brighter against the tile.
 - `src/widget/battery/style.scss` now uses inset (inner) green-tinted shadows for non-empty battery cells instead of outer drop shadows, keeping the brighter glow effect while making the fill look recessed.
 - `src/widget/battery/style.scss` now keeps non-empty battery cells as inset highlights only (light/green inner glow) and removes darker inset shading so the fill reads as bright tint rather than shadow.
+- `src/widget/power-actions/index.tsx` now implements the square dark power-actions tile with a three-row `2/1/2` icon-button layout (left-right, centered, left-right) and wires buttons in order: lock (`hyprlock`), logout, shutdown, restart, sleep.
+- `src/widget/power-actions/style.scss` defines the power-actions tile’s internal spacing, row sizing, and icon-button presentation states (hover/active plus per-action accent colors).
+- `src/widget/Bar.tsx` now imports and renders `PowerActionsTile` in the stacked slot directly below `BatteryTile` in the split third row.
+- `src/widget/power-actions/style.scss` now keeps power-action buttons backgroundless by using transparent `background-color` (normal/hover/active) while still forcing `background-image: none` to suppress theme gradients.
+- `src/widget/power-actions/style.scss` now forces power-action button backgrounds (base/hover/active/checked/focus) to the same dark value as the parent tile (`tokens.$gb-bg`) so GTK theme button fills do not show through.
+- `src/widget/power-actions/style.scss` now mirrors the volume tile button-state styling (`$gb-bg` / `$gb-bg-soft` / `$gb-selection`) and also targets potential inner `> button` nodes to suppress GTK default fills where class-only selectors were insufficient.

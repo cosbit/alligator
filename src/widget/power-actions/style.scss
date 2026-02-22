@@ -1,0 +1,99 @@
+@use "../../styles/tokens" as tokens;
+
+.tile--power-actions {
+    padding: tokens.$space-sm;
+}
+
+.power-actions__content {
+    margin: 0;
+}
+
+.power-actions__row {
+    min-height: 24px;
+}
+
+.power-actions__button {
+    min-width: 30px;
+    min-height: 30px;
+    padding: 0;
+    margin: 0;
+    border: 2px solid rgba(tokens.$gb-fg-muted, 0.35);
+    border-radius: 7px;
+    background-image: none;
+    background-color: tokens.$gb-bg;
+    color: tokens.$gb-fg;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.power-actions__button:hover {
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+}
+
+.power-actions__button:active,
+.power-actions__button:checked {
+    background-image: none;
+    background-color: tokens.$gb-selection;
+}
+
+.power-actions__button:disabled {
+    background-image: none;
+    opacity: 0.55;
+}
+
+.tile--power-actions .power-actions__button > button,
+.tile--power-actions .power-actions__button > button:hover,
+.tile--power-actions .power-actions__button > button:active,
+.tile--power-actions .power-actions__button > button:checked,
+.tile--power-actions .power-actions__button > button:focus {
+    border-radius: 7px;
+    border: 2px solid transparent;
+    background-image: none;
+    background-color: tokens.$gb-bg;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.tile--power-actions .power-actions__button > button:hover {
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+}
+
+.tile--power-actions .power-actions__button > button:active,
+.tile--power-actions .power-actions__button > button:checked {
+    background-image: none;
+    background-color: tokens.$gb-selection;
+}
+
+.power-actions__icon {
+    min-width: 16px;
+    min-height: 16px;
+}
+
+.power-actions__button--lock {
+    border-color: rgba(tokens.$gb-green, 0.78);
+    color: tokens.$gb-green;
+}
+
+.power-actions__button--logout {
+    border-color: rgba(tokens.$gb-orange, 0.8);
+    color: tokens.$gb-orange;
+}
+
+.power-actions__button--shutdown {
+    border-color: rgba(tokens.$gb-red, 0.88);
+    color: tokens.$gb-red;
+}
+
+.power-actions__button--restart {
+    border-color: rgba(tokens.$gb-yellow, 0.8);
+    color: tokens.$gb-yellow;
+}
+
+.power-actions__button--sleep {
+    border-color: rgba(tokens.$gb-blue, 0.8);
+    color: tokens.$gb-blue;
+}
