@@ -4,6 +4,7 @@
 @use "./widget/date/style" as date;
 @use "./widget/battery/style" as battery;
 @use "./widget/power-actions/style" as powerActions;
+@use "./widget/display/style" as display;
 @use "./widget/volume/style" as volume;
 
 // https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
@@ -48,4 +49,9 @@ $bg-color: #{"@theme_bg_color"};
 .tile--light {
     background-color: tokens.$gb-light-bg;
     color: tokens.$gb-light-fg;
+}
+
+.tile--light image {
+    color: tokens.$gb-light-fg;
+    -gtk-icon-shadow: none;
 }

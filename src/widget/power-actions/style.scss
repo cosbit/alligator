@@ -1,11 +1,7 @@
 @use "../../styles/tokens" as tokens;
 
-.tile--power-actions {
-    padding: tokens.$space-sm;
-}
-
 .power-actions__content {
-    margin: 0;
+    margin: tokens.$space-sm;
 }
 
 .power-actions__row {

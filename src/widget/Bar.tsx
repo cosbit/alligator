@@ -4,6 +4,7 @@ import DateTile from "./date"
 import BatteryTile from "./battery"
 import VolumeTile from "./volume"
 import PowerActionsTile from "./power-actions"
+import DisplayTile from "./display"
 
 export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
@@ -51,7 +52,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
                 halign={Gtk.Align.CENTER}
                 spacing={tileGutter}
             >
-                <box cssClasses={["tile", "tile--horizontal", "tile--dark"]} />
+                <DisplayTile/>
             </box>
             <box /** Fith row; network & devices */
                 cssClasses={["bar__row", "bar__row--pair"]}
