@@ -71,8 +71,8 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="system-lock-screen-symbolic"
-                            pixelSize={16}
+                            iconName="60"
+                            pixelSize={20}
                         />
                     </button>
                     <box hexpand />
@@ -85,8 +85,8 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="system-log-out-symbolic"
-                            pixelSize={16}
+                            iconName="20"
+                            pixelSize={20}
                         />
                     </button>
                 </box>
@@ -107,8 +107,8 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="system-shutdown-symbolic"
-                            pixelSize={16}
+                            iconName="262"
+                            pixelSize={20}
                         />
                     </button>
                     <box hexpand />
@@ -129,8 +129,8 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="system-reboot-symbolic"
-                            pixelSize={16}
+                            iconName="310"
+                            pixelSize={20}
                         />
                     </button>
                     <box hexpand />
@@ -143,8 +143,8 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="weather-clear-night-symbolic"
-                            pixelSize={16}
+                            iconName="66"
+                            pixelSize={20}
                         />
                     </button>
                 </box>
