@@ -6,7 +6,7 @@ import VolumeTile from "./volume"
 
 export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
-    const tileGutter = 8
+    const tileGutter = 6
 
     return <window
         name="sidebar"

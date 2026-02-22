@@ -16,6 +16,8 @@ type BatteryInfo = {
     charging: boolean
 }
 
+const BATTERY_CELL_COUNT = 5
+
 function createPoll<T>(
     initial: T,
     intervalMs: number,
@@ -139,7 +141,7 @@ function createBatteryPoll() {
 }
 
 function createCellClass(index: number, infoAccessor: ReturnType<typeof createBatteryPoll>) {
-    const threshold = (index + 1) * 20
+    const threshold = Math.ceil(((index + 1) * 100) / BATTERY_CELL_COUNT)
 
     return infoAccessor((info) => {
         const isActive = info.percent >= threshold
@@ -156,8 +158,24 @@ function createCellClass(index: number, infoAccessor: ReturnType<typeof createBa
     }).as(splitClasses)
 }
 
-function createChargingGlyph(infoAccessor: ReturnType<typeof createBatteryPoll>) {
-    return infoAccessor((info) => (info.charging ? "+" : "-"))
+function createStatusIconName(infoAccessor: ReturnType<typeof createBatteryPoll>) {
+    return infoAccessor((info) =>
+        info.charging ? "go-up-symbolic" : "go-down-symbolic",
+    )
+}
+
+function createStatusIconClass(infoAccessor: ReturnType<typeof createBatteryPoll>) {
+    return infoAccessor((info) => {
+        if (info.charging) {
+            return "battery__status-icon battery__status-icon--charging"
+        }
+
+        return "battery__status-icon battery__status-icon--discharging"
+    }).as(splitClasses)
+}
+
+function createPercentLabel(infoAccessor: ReturnType<typeof createBatteryPoll>) {
+    return infoAccessor((info) => `${info.percent}%`)
 }
 
 export default function BatteryTile() {
@@ -167,8 +185,11 @@ export default function BatteryTile() {
         createCellClass(1, info),
         createCellClass(2, info),
         createCellClass(3, info),
+        createCellClass(4, info),
     ]
-    const glyph = createChargingGlyph(info)
+    const statusIconName = createStatusIconName(info)
+    const statusIconClasses = createStatusIconClass(info)
+    const percentLabel = createPercentLabel(info)
 
     return (
         <box
@@ -180,33 +201,54 @@ export default function BatteryTile() {
         >
             <box
                 cssClasses={["battery__content"]}
-                spacing={5}
-                halign={Gtk.Align.CENTER}
-                valign={Gtk.Align.CENTER}
-                hexpand={false}
+                vertical
+                spacing={4}
+                halign={Gtk.Align.FILL}
+                valign={Gtk.Align.START}
+                hexpand
                 vexpand={false}
             >
                 <box
                     cssClasses={["battery__cells"]}
-                    spacing={5}
-                    halign={Gtk.Align.CENTER}
+                    spacing={2}
+                    halign={Gtk.Align.FILL}
+                    valign={Gtk.Align.START}
+                    hexpand
+                    vexpand={false}
+                    homogeneous
+                >
+                    <box cssClasses={cellClasses[0]} hexpand />
+                    <box cssClasses={cellClasses[1]} hexpand />
+                    <box cssClasses={cellClasses[2]} hexpand />
+                    <box cssClasses={cellClasses[3]} hexpand />
+                    <box cssClasses={cellClasses[4]} hexpand />
+                </box>
+                <box
+                    cssClasses={["battery__status"]}
+                    spacing={4}
+                    halign={Gtk.Align.END}
                     valign={Gtk.Align.CENTER}
                     hexpand={false}
                     vexpand={false}
                 >
-                    <box cssClasses={cellClasses[0]} />
-                    <box cssClasses={cellClasses[1]} />
-                    <box cssClasses={cellClasses[2]} />
-                    <box cssClasses={cellClasses[3]} />
+                    <image
+                        cssClasses={statusIconClasses}
+                        iconName={statusIconName}
+                        pixelSize={13}
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
+                        hexpand={false}
+                        vexpand={false}
+                    />
+                    <label
+                        cssClasses={["battery__percent"]}
+                        label={percentLabel}
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
+                        hexpand={false}
+                        vexpand={false}
+                    />
                 </box>
-                <label
-                    cssClasses={["battery__glyph"]}
-                    label={glyph}
-                    halign={Gtk.Align.CENTER}
-                    valign={Gtk.Align.CENTER}
-                    hexpand={false}
-                    vexpand={false}
-                />
             </box>
         </box>
     )
