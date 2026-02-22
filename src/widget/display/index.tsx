@@ -4,12 +4,11 @@ import GLib from "gi://GLib"
 import "./style.scss"
 
 const HORIZONTAL_TILE_WIDTH = 220
-const ROW_CONTENT_WIDTH = Math.floor(HORIZONTAL_TILE_WIDTH * 0.8)
-const TOP_ROW_SLOT_WIDTH = 54
+const TOP_ROW_SLOT_WIDTH = 50
 const BRIGHTNESS_DEVICE = "amdgpu_bl2"
 const BRIGHTNESS_FALLBACK_PERCENT = 50
-const BLUE_LIGHT_ENABLE_COMMAND = "hyprctl hyprsunset temperature 4300"
-const BLUE_LIGHT_DISABLE_COMMAND = "hyprctl hyprsunset identity"
+const DEBUG_BRIGHTNESS = false
+const BLUE_LIGHT_TOGGLE_COMMAND = "toggle-bluelight"
 
 const splitClasses = (value: string) =>
     value.trim().split(/\s+/).filter(Boolean)
@@ -26,6 +25,23 @@ type WorkspaceState = {
 
 function clamp(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value))
+}
+
+function debugBrightness(message: string, details?: unknown) {
+    if (!DEBUG_BRIGHTNESS) {
+        return
+    }
+
+    if (details === undefined) {
+        print(`[display:brightness] ${message}`)
+        return
+    }
+
+    try {
+        print(`[display:brightness] ${message} ${JSON.stringify(details)}`)
+    } catch (error) {
+        print(`[display:brightness] ${message}`)
+    }
 }
 
 function safeSpawn(command: string) {
@@ -119,23 +135,95 @@ function parseBrightnessPercent(output: string) {
     return clamp(value, 0, 100)
 }
 
+function parseBrightnessRawValue(output: string) {
+    const match = output.trim().match(/^(\d+)$/m)
+    if (!match) {
+        return null
+    }
+
+    const value = Number.parseInt(match[1], 10)
+    if (Number.isNaN(value)) {
+        return null
+    }
+
+    return Math.max(0, value)
+}
+
+function readBrightnessPercentFromRaw() {
+    const currentCommand = `brightnessctl get -d ${BRIGHTNESS_DEVICE}`
+    const maxCommand = `brightnessctl max -d ${BRIGHTNESS_DEVICE}`
+    const currentRaw = safeSpawn(currentCommand)
+    const maxRaw = safeSpawn(maxCommand)
+
+    debugBrightness("raw-read commands", {
+        currentCommand,
+        currentRaw,
+        maxCommand,
+        maxRaw,
+    })
+
+    if (!currentRaw || !maxRaw) {
+        debugBrightness("raw-read unavailable")
+        return null
+    }
+
+    const current = parseBrightnessRawValue(currentRaw)
+    const max = parseBrightnessRawValue(maxRaw)
+
+    debugBrightness("raw-read parsed", { current, max })
+
+    if (current === null || max === null || max <= 0) {
+        debugBrightness("raw-read parse failed", { current, max })
+        return null
+    }
+
+    const percent = clamp(Math.round((current / max) * 100), 0, 100)
+    debugBrightness("raw-read percent", { percent })
+    return percent
+}
+
 function readBrightnessState(): BrightnessState | null {
-    const output = safeSpawn(`brightnessctl -d ${BRIGHTNESS_DEVICE} -m`)
+    const rawPercent = readBrightnessPercentFromRaw()
+    if (rawPercent !== null) {
+        const state = { percent: rawPercent, available: true }
+        debugBrightness("state from raw", state)
+        return state
+    }
+
+    const machineCommand = `brightnessctl -d ${BRIGHTNESS_DEVICE} -m`
+    const plainCommand = `brightnessctl -d ${BRIGHTNESS_DEVICE}`
+    const machineOutput = safeSpawn(machineCommand)
+    const plainOutput = machineOutput ? null : safeSpawn(plainCommand)
+    const output = machineOutput ?? plainOutput
+
+    debugBrightness("fallback-read outputs", {
+        machineCommand,
+        machineOutput,
+        plainCommand,
+        plainOutput,
+    })
+
     if (!output) {
+        debugBrightness("state read failed")
         return null
     }
 
     const percent = parseBrightnessPercent(output)
     if (percent === null) {
+        debugBrightness("fallback parse failed", { output })
         return null
     }
 
-    return { percent, available: true }
+    const state = { percent, available: true }
+    debugBrightness("state from fallback parse", state)
+    return state
 }
 
 function setBrightness(percent: number) {
     const clamped = clamp(Math.round(percent), 0, 100)
-    runCommand(`brightnessctl set -d ${BRIGHTNESS_DEVICE} ${clamped}%`)
+    const command = `brightnessctl set -d ${BRIGHTNESS_DEVICE} ${clamped}%`
+    debugBrightness("set command", { command, percent, clamped })
+    runCommand(command)
 }
 
 function parseWorkspaceState(activeRaw: string, workspacesRaw: string): WorkspaceState | null {
@@ -360,7 +448,8 @@ function rebuildClientIcons(box: Gtk.Box, clientClasses: string[]) {
 }
 
 function toggleBlueLight(enabled: boolean) {
-    runCommand(enabled ? BLUE_LIGHT_ENABLE_COMMAND : BLUE_LIGHT_DISABLE_COMMAND)
+    void enabled
+    runCommand(BLUE_LIGHT_TOGGLE_COMMAND)
 }
 
 export default function DisplayTile() {
@@ -369,6 +458,7 @@ export default function DisplayTile() {
         percent: BRIGHTNESS_FALLBACK_PERCENT,
         available: false,
     }
+    debugBrightness("initial brightness state", initialBrightnessState)
     const brightness = createPoll<BrightnessState>(
         initialBrightnessState,
         1_000,
@@ -382,6 +472,10 @@ export default function DisplayTile() {
     const clients = createPoll<string[]>(readClientClasses() ?? [], 2_000, readClientClasses)
     const blueLightEnabled = Variable(false)
     let suppressBrightnessWrites = true
+
+    brightness.subscribe((state) => {
+        debugBrightness("brightness poll update", state)
+    })
 
     const titleLabel = activeTitle((value) => truncateTitle(value))
     const brightnessValue = brightness((state) => state.percent)
@@ -418,20 +512,20 @@ export default function DisplayTile() {
 
     return (
         <box
-            cssClasses={["tile", "tile--horizontal", "tile--display", "tile--light"]}
+            cssClasses={["tile", /*"tile--horizontal",*/ "tile--display", "tile--light"]}
             halign={Gtk.Align.CENTER}
             valign={Gtk.Align.CENTER}
             hexpand={false}
             vexpand={false}
         >
             <box
-                cssClasses={["display__content"]}
+                cssClasses={[/*"display__content"*/]}
                 vertical
+                homogeneous
                 spacing={4}
-                halign={Gtk.Align.CENTER}
+                halign={Gtk.Align.FILL}
                 valign={Gtk.Align.FILL}
-                widthRequest={ROW_CONTENT_WIDTH}
-                hexpand={false}
+                hexpand
                 vexpand
             >
                 <centerbox
@@ -484,6 +578,8 @@ export default function DisplayTile() {
                         halign={Gtk.Align.CENTER}
                         valign={Gtk.Align.CENTER}
                         hexpand
+                        widthChars={14}
+                        maxWidthChars={14}
                         xalign={0.5}
                     />
 
@@ -525,9 +621,17 @@ export default function DisplayTile() {
                     />
                     <slider
                         cssClasses={["display__brightness-slider"]}
-                        $={(self) => {
-                            self.set_value(clamp(brightness.get().percent, 0, 100))
+                        setup={(self) => {
+                            const initialValue = clamp(brightness.get().percent, 0, 100)
+                            debugBrightness("slider setup", {
+                                initialValue,
+                                state: brightness.get(),
+                            })
+                            self.set_value(initialValue)
                             suppressBrightnessWrites = false
+                            debugBrightness("slider setup complete", {
+                                suppressBrightnessWrites,
+                            })
                         }}
                         orientation={Gtk.Orientation.HORIZONTAL}
                         min={0}
@@ -539,17 +643,30 @@ export default function DisplayTile() {
                         hexpand
                         sensitive={brightnessAvailable}
                         onValueChanged={(self) => {
+                            const sliderValue = clamp(Math.round(self.get_value()), 0, 100)
+                            debugBrightness("slider value changed", {
+                                sliderValue,
+                                suppressBrightnessWrites,
+                                state: brightness.get(),
+                            })
+
                             if (suppressBrightnessWrites) {
+                                debugBrightness("slider ignored: suppressed")
                                 return
                             }
 
                             const current = brightness.get()
                             if (!current.available) {
+                                debugBrightness("slider ignored: brightness unavailable", current)
                                 return
                             }
 
-                            const nextPercent = clamp(Math.round(self.get_value()), 0, 100)
+                            const nextPercent = sliderValue
                             if (nextPercent === current.percent) {
+                                debugBrightness("slider ignored: no change", {
+                                    nextPercent,
+                                    currentPercent: current.percent,
+                                })
                                 return
                             }
 
@@ -557,6 +674,7 @@ export default function DisplayTile() {
                                 ...current,
                                 percent: nextPercent,
                             })
+                            debugBrightness("slider applying new state", brightness.get())
                             setBrightness(nextPercent)
                         }}
                     />

@@ -1,5 +1,11 @@
 @use "../../styles/tokens" as tokens;
 
+.tile--display {
+    padding: 0;
+    min-width: tokens.$tile-unit * 2 + tokens.$tile-gutter - 4px;
+    min-height: tokens.$tile-unit;
+}
+
 .display__content {
     margin: 0;
 }
@@ -7,25 +13,22 @@
 .display__row {
     margin: 0;
     padding: 0;
+    min-height: 24px;
 }
 
 .display__row--top,
+.display__row--brightness,
 .display__row--bottom {
-    margin-left: tokens.$space-sm;
-    margin-right: tokens.$space-sm;
+    padding-left: tokens.$space-sm;
+    padding-right: tokens.$space-sm;
 }
 
 .display__row--top {
-    margin-top: tokens.$space-sm;
-}
-
-.display__row--brightness {
-    margin-left: tokens.$space-sm;
-    margin-right: tokens.$space-sm;
+    padding-top: tokens.$space-sm;
 }
 
 .display__row--bottom {
-    margin-bottom: tokens.$space-sm;
+    padding-bottom: tokens.$space-sm;
 }
 
 .display__top-icons {
