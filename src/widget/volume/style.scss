@@ -47,7 +47,7 @@
     font-size: 12px;
     letter-spacing: 0.4px;
     font-weight: 600;
-    font-family: "Merchant";
+    //font-family: "Merchant";
     color: tokens.$gb-fg;
 }
 
@@ -59,7 +59,9 @@
 .volume__percent {
     font-size: 11px;
     letter-spacing: 0.3px;
-    font-family: "Merchant";
+    //font-family: "Merchant";
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
     color: tokens.$gb-fg;
     opacity: 0.9;
 }

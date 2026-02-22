@@ -22,8 +22,6 @@ export default function ClockTile() {
     return (
         <box
             cssClasses={["tile", "tile--square", "tile--clock", "tile--light"]}
-            // halign={Gtk.Align.CENTER}
-            // valign={Gtk.Align.CENTER}
             hexpand={false}
             vexpand={false}
         >

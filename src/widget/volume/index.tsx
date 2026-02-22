@@ -7,9 +7,10 @@ const ICON_DIR = `${SRC}/icons`
 const OUTPUT_TARGET = "@DEFAULT_AUDIO_SINK@"
 const INPUT_TARGET = "@DEFAULT_AUDIO_SOURCE@"
 const HORIZONTAL_TILE_WIDTH = 220
-const ROW_CONTENT_WIDTH = Math.floor(HORIZONTAL_TILE_WIDTH * 0.7)
+const ROW_CONTENT_WIDTH = Math.floor(HORIZONTAL_TILE_WIDTH * 0.8)
 const ROW_SPACING = 0
 const CONTROL_ROW_SPACING = 4
+const PERCENT_LABEL_WIDTH_CHARS = 4
 
 const splitClasses = (value: string) =>
     value.trim().split(/\s+/).filter(Boolean)
@@ -26,7 +27,7 @@ type SinkInfo = {
     isDefault: boolean
 }
 
-function truncateDeviceName(value: string, maxChars = 7) {
+function truncateDeviceName(value: string, maxChars = 20) {
     const label = value.trim()
     if (label.length <= maxChars) {
         return label
@@ -178,7 +179,7 @@ function createVolumePoll(target: string) {
         available: false,
     }
 
-    return createPoll(fallback, 2_000, () => readVolumeState(target))
+    return createPoll(fallback, 500, () => readVolumeState(target))
 }
 
 function createSinksPoll() {
@@ -262,9 +263,13 @@ export default function VolumeTile() {
     const micState = createVolumePoll(INPUT_TARGET)
     const sinks = createSinksPoll()
 
-    const outputPercent = outputState((state) =>
-        state.available ? `${state.volume}%` : "--",
-    )
+    const outputPercent = outputState((state) => {
+        if (!state.available) {
+            return "\u00a0\u00a0--"
+        }
+        const padded = state.volume.toString().padStart(3, "\u00a0")
+        return `${padded}%`
+    })
     const outputValue = outputState((state) => state.volume)
     const outputAvailable = outputState((state) => state.available)
     const micAvailable = micState((state) => state.available)
@@ -308,9 +313,9 @@ export default function VolumeTile() {
     sinks.subscribe(updateSinkMenu)
 
     const volumeIcon = createIconWidget("mute.svg", "audio-volume-high-symbolic")
-    const micIcon = createIconWidget("microphone.svg", "microphone-sensitivity-high-symbolic")
+    const micIcon = createIconWidget("microphone.svg", "microphone-sensitivity-muted-symbolic")
     const caretIcon = createIconWidget("chevron.svg", "pan-down-symbolic")
-    const previousIcon = createIconWidget("previous.svg", "media-skip-backward-symbolic")
+    const previousIcon = createIconWidget("previous.svg", "media-seek-backward-symbolic")
     const pauseIcon = createIconWidget("pause.svg", "media-playback-pause-symbolic")
     const playIcon = createIconWidget("play.svg", "media-playback-start-symbolic")
 
@@ -399,6 +404,10 @@ export default function VolumeTile() {
                             cssClasses={["volume__percent"]}
                             label={outputPercent}
                             xalign={1}
+                            halign={Gtk.Align.END}
+                            hexpand={false}
+                            widthChars={PERCENT_LABEL_WIDTH_CHARS}
+                            maxWidthChars={PERCENT_LABEL_WIDTH_CHARS}
                         />
                     </box>
                 </box>
