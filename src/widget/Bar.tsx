@@ -5,6 +5,7 @@ import BatteryTile from "./battery"
 import VolumeTile from "./volume"
 import PowerActionsTile from "./power-actions"
 import DisplayTile from "./display"
+import NetworkTile from "./network"
 
 export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
@@ -59,7 +60,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
                 halign={Gtk.Align.CENTER}
                 spacing={tileGutter}
             >
-                <box cssClasses={["tile", "tile--square", "tile--dark"]} />
+                <NetworkTile/>
                 <box cssClasses={["tile", "tile--square", "tile--dark"]} />
             </box>
         </box>

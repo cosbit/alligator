@@ -1,0 +1,157 @@
+@use "../../styles/tokens" as tokens;
+
+.tile--network {
+    padding: 0;
+}
+
+.network__content {
+    margin: tokens.$space-sm;
+}
+
+.network__row {
+    min-height: 22px;
+}
+
+.network__toggle {
+    min-width: 0;
+    min-height: 22px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid tokens.$gb-accent-inactive;
+    border-radius: 6px;
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+    color: tokens.$gb-fg-muted;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.network__toggle > button {
+    border: 1px solid tokens.$gb-accent-inactive;
+    border-radius: 6px;
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+    color: inherit;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.network__toggle:hover {
+    background-image: none;
+    background-color: rgba(tokens.$gb-selection, 0.9);
+}
+
+.network__toggle > button:hover {
+    background-image: none;
+    background-color: rgba(tokens.$gb-selection, 0.9);
+}
+
+.network__toggle:active,
+.network__toggle:checked {
+    background-image: none;
+    background-color: rgba(tokens.$gb-selection, 0.95);
+}
+
+.network__toggle > button:active,
+.network__toggle > button:checked {
+    background-image: none;
+    background-color: rgba(tokens.$gb-selection, 0.95);
+}
+
+.network__toggle label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: inherit;
+}
+
+.network__toggle--active {
+    color: tokens.$gb-fg;
+}
+
+.network__toggle--wifi.network__toggle--active {
+    border-color: tokens.$gb-aqua;
+    background-color: rgba(tokens.$gb-aqua, 0.14);
+    color: tokens.$gb-aqua;
+}
+
+.network__toggle--wifi.network__toggle--active > button {
+    border-color: tokens.$gb-aqua;
+    background-color: rgba(tokens.$gb-aqua, 0.14);
+    color: tokens.$gb-aqua;
+}
+
+.network__toggle--vpn.network__toggle--active {
+    border-color: tokens.$gb-blue;
+    background-color: rgba(tokens.$gb-blue, 0.14);
+    color: tokens.$gb-blue;
+}
+
+.network__toggle--vpn.network__toggle--active > button {
+    border-color: tokens.$gb-blue;
+    background-color: rgba(tokens.$gb-blue, 0.14);
+    color: tokens.$gb-blue;
+}
+
+.tile--network .network__status-icon {
+    min-width: 14px;
+    min-height: 14px;
+    color: tokens.$gb-fg-muted;
+}
+
+.tile--network .network__status-icon--wifi-on {
+    color: tokens.$gb-aqua;
+}
+
+.tile--network .network__status-icon--wifi-idle {
+    color: tokens.$gb-yellow;
+}
+
+.tile--network .network__status-icon--wifi-off {
+    color: tokens.$gb-gray;
+}
+
+.tile--network .network__status-icon--vpn-on {
+    color: tokens.$gb-blue;
+}
+
+.tile--network .network__status-icon--vpn-off {
+    color: tokens.$gb-gray;
+}
+
+.network__status-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    color: tokens.$gb-fg;
+}
+
+.network__status-label--online {
+    color: tokens.$gb-fg;
+}
+
+.network__status-label--idle {
+    color: tokens.$gb-yellow;
+}
+
+.network__status-label--vpn-on {
+    color: tokens.$gb-fg-soft;
+}
+
+.network__status-label--offline {
+    color: tokens.$gb-fg-muted;
+}
+
+.network__status-ip {
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    color: tokens.$gb-fg-muted;
+    opacity: 0.95;
+}
