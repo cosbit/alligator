@@ -308,8 +308,8 @@ export default function VolumeTile() {
 
     const caretIcon = createIconWidget("pan-down-symbolic")
     const volumeIcon = createIconWidget("audio-volume-high-symbolic")
-    const micIcon = createIconWidget("33")
-    const previousIcon = createIconWidget("45")
+    const micIcon = createIconWidget("mute")
+    const previousIcon = createIconWidget("previous")
     const pauseIcon = createIconWidget("media-playback-pause-symbolic")
     const playIcon = createIconWidget("media-playback-start-symbolic")
 
