@@ -606,7 +606,7 @@ export default function DisplayTile() {
                         >
                             <image
                                 cssClasses={["display__top-icon"]}
-                                iconName="76"
+                                iconName="display_blue_light_toggle"
                                 pixelSize={16}
                             />
                         </button>
@@ -617,7 +617,7 @@ export default function DisplayTile() {
                         >
                             <image
                                 cssClasses={["display__top-icon"]}
-                                iconName="142"
+                                iconName="display_sexy_mode"
                                 pixelSize={16}
                             />
                         </button>
@@ -644,12 +644,12 @@ export default function DisplayTile() {
                     >
                         <image
                             cssClasses={["display__top-icon", "display__top-icon--decorative"]}
-                            iconName="183"
+                            iconName="display_top_right_icon_left"
                             pixelSize={16}
                         />
                         <image
                             cssClasses={["display__top-icon", "display__top-icon--decorative"]}
-                            iconName="81"
+                            iconName="display_top_right_icon_right"
                             pixelSize={16}
                         />
                     </box>

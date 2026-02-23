@@ -20,6 +20,8 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 ## Development workflow
 - Enter the dev shell: `nix develop`
 - Run the config locally: `ags -c ./src/app.ts`
+- Build a reproducible package artifact: `nix build .#alligator` (or just `nix build` for the default package)
+- Run the packaged launcher after build: `./result/bin/alligator`
 
 ## Conventions
 - Keep windows named and stable so `ags toggle <name>` works predictably.
@@ -1184,6 +1186,9 @@ event controller.
 
 ## File notes
 - `AGENTS.md` captures workflow rules and running architecture notes for the repo.
+- `flake.nix` defines the dev shell and now also exports `packages.alligator` / `packages.default` plus `apps.default` so `nix build` produces a runnable launcher artifact.
+- `flake.nix` package install copies `src/` into `$out/share/alligator`, rewrites `$out/share/alligator/src/package.json` to point `astal` at `${pkgs.astal.gjs}/share/astal/gjs`, and generates `bin/alligator` that exports GTK/GI env vars before `ags run --gtk4 ./src/app.ts`.
+- `flake.nix` runtime `XDG_DATA_DIRS` now includes `adwaita-icon-theme` for symbolic GTK icons, and the package creates `$out/share/alligator/icons -> src/icons`; however custom numeric SVG icons still require `src/icons/*.svg` to be tracked in git because flake sources exclude untracked files.
 - `src/widget/Bar.tsx` defines the Bar window container and tile layout rows.
 - `src/widget/Bar.tsx` now uses GTK4 imports, sets `name="sidebar"`, and renders row containers under `.bar__inner`.
 - `src/widget/Bar.tsx` now applies GTK layout props (`spacing`, `halign`) to replace flexbox-style alignment.
@@ -1353,3 +1358,4 @@ event controller.
 - `src/widget/Bar.tsx` row 5 now imports and renders `NetworkTile` in the first square slot, leaving the second square placeholder for a future devices tile.
 - `src/widget/network/index.tsx` now renders Wi-Fi/VPN IP addresses as separate trailing labels, and `src/widget/network/style.scss` styles `.network__status-ip` at `7px` (roughly 2/3 of the 10px status text) so the IP reads as secondary metadata.
 - `src/widget/network/index.tsx` now removes the Wi-Fi and VPN row icon widgets so the bottom two network-tile rows are text-only (primary status + smaller trailing IP label).
+- `src/icons/` custom glyphs used by `src/widget/clock/index.tsx`, `src/widget/display/index.tsx`, and `src/widget/power-actions/index.tsx` were renamed from numeric filenames to semantic names (e.g. `power_lock.svg`, `display_blue_light_toggle.svg`, `clock_bottom_icon_left.svg`); keep widget `iconName` values aligned to these basenames.

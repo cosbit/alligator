@@ -71,7 +71,7 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="60"
+                            iconName="power_lock"
                             pixelSize={30}
                         />
                     </button>
@@ -85,7 +85,7 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="20"
+                            iconName="power_logout"
                             pixelSize={25}
                         />
                     </button>
@@ -107,7 +107,7 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="262"
+                            iconName="power_shutdown"
                             pixelSize={25}
                         />
                     </button>
@@ -129,7 +129,7 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="310"
+                            iconName="power_restart"
                             pixelSize={25}
                         />
                     </button>
@@ -143,7 +143,7 @@ export default function PowerActionsTile() {
                     >
                         <image
                             cssClasses={["power-actions__icon"]}
-                            iconName="66"
+                            iconName="power_sleep"
                             pixelSize={25}
                         />
                     </button>
