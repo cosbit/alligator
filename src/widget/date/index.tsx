@@ -45,7 +45,6 @@ export default function DateTile() {
             halign={Gtk.Align.CENTER}
             valign={Gtk.Align.CENTER}
             hexpand={false}
-            vexpand={false}
         >
             <box
                 vertical
@@ -53,35 +52,28 @@ export default function DateTile() {
                 halign={Gtk.Align.CENTER}
                 valign={Gtk.Align.CENTER}
                 hexpand={false}
-                vexpand={false}
             >
                 <label
                     cssClasses={["date__day"]}
                     label={dayLabel}
-                    hexpand={false}
-                    vexpand={false}
-                    xalign={0.5}
+                    halign={Gtk.Align.CENTER}
                 />
                 <box
                     cssClasses={["date__full"]}
                     spacing={6}
-                    hexpand={false}
-                    vexpand={false}
+                    halign={Gtk.Align.CENTER}
                 >
                     <label
                         cssClasses={["date__part"]}
                         label={dateDay}
-                        xalign={0.5}
                     />
                     <label
                         cssClasses={["date__part", "date__month"]}
                         label={dateMonth}
-                        xalign={0.5}
                     />
                     <label
                         cssClasses={["date__part"]}
                         label={dateYear}
-                        xalign={0.5}
                     />
                 </box>
             </box>
