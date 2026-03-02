@@ -141,10 +141,10 @@ function createBatteryPoll() {
 }
 
 function createCellClass(index: number, infoAccessor: ReturnType<typeof createBatteryPoll>) {
-    const threshold = Math.ceil(((index + 1) * 100) / BATTERY_CELL_COUNT)
+    const thresholds = [10, 30, 50, 70, 90]
 
     return infoAccessor((info) => {
-        const isActive = info.percent >= threshold
+        const isActive = info.percent >= thresholds[index]
 
         if (!isActive) {
             return "battery__cell battery__cell--inactive"
@@ -152,9 +152,8 @@ function createCellClass(index: number, infoAccessor: ReturnType<typeof createBa
 
         const isWarning = info.percent < 40 && !info.charging
 
-        return `battery__cell ${
-            isWarning ? "battery__cell--warning" : "battery__cell--active"
-        }`
+        return `battery__cell ${isWarning ? "battery__cell--warning" : "battery__cell--active"
+            }`
     }).as(splitClasses)
 }
 
@@ -180,6 +179,23 @@ function createPercentLabel(infoAccessor: ReturnType<typeof createBatteryPoll>) 
 
 export default function BatteryTile() {
     const info = createBatteryPoll()
+
+    let lastPercent = -1
+    info.subscribe(data => {
+        const previous = lastPercent
+        lastPercent = data.percent
+
+        if (data.charging || data.percent > 10) {
+            return
+        }
+
+        if (data.percent <= 10 && (previous === -1 || data.percent < previous)) {
+            const msg = `Battery level is at ${data.percent}%`
+            GLib.spawn_command_line_async(
+                `notify-send "Battery Low" "${msg}" -u critical -i battery-empty-symbolic`,
+            )
+        }
+    })
     const cellClasses = [
         createCellClass(0, info),
         createCellClass(1, info),
