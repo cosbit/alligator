@@ -1,5 +1,24 @@
 @use "../../styles/tokens" as tokens;
 
+.date__decorative {
+    padding-left: tokens.$space-xs;
+    padding-right: tokens.$space-xs;
+}
+
+.date__icon {
+    min-width: 12px;
+    min-height: 12px;
+    opacity: 0.65;
+}
+
+.date__icon--left {
+    color: tokens.$gb-yellow;
+}
+
+.date__icon--right {
+    color: tokens.$gb-blue;
+}
+
 .date__day {
     font-size: 20px;
     font-weight: 600;

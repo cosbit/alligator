@@ -40,6 +40,8 @@
         runtimePath = lib.makeBinPath [
           pkgs.bash
           pkgs.coreutils
+          pkgs.hyprsunset
+          pkgs.libnotify
         ];
 
         alligator = pkgs.stdenvNoCC.mkDerivation {
@@ -117,6 +119,10 @@
             nodejs_20
             nodePackages.typescript
             nodePackages.typescript-language-server
+
+            # dev dependencies for scripts
+            hyprsunset
+            libnotify
           ];
 
           shellHook = ''

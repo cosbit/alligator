@@ -1359,3 +1359,8 @@ event controller.
 - `src/widget/network/index.tsx` now renders Wi-Fi/VPN IP addresses as separate trailing labels, and `src/widget/network/style.scss` styles `.network__status-ip` at `7px` (roughly 2/3 of the 10px status text) so the IP reads as secondary metadata.
 - `src/widget/network/index.tsx` now removes the Wi-Fi and VPN row icon widgets so the bottom two network-tile rows are text-only (primary status + smaller trailing IP label).
 - `src/icons/` custom glyphs used by `src/widget/clock/index.tsx`, `src/widget/display/index.tsx`, and `src/widget/power-actions/index.tsx` were renamed from numeric filenames to semantic names (e.g. `power_lock.svg`, `display_blue_light_toggle.svg`, `clock_bottom_icon_left.svg`); keep widget `iconName` values aligned to these basenames.
+- `src/widget/date/index.tsx` now includes a decorative top row with two non-interactive icons (`mute` and `power_sleep`) above the day/date labels; polling and date parsing behavior is unchanged.
+- `src/widget/date/style.scss` now defines `.date__decorative` plus `.date__icon*` classes for subtle icon sizing, spacing, opacity, and accent coloring.
+- `src/widget/display/index.tsx` bluelight toggle now implements the logic internally (managing `/tmp/hyprsunset_state`, checking/starting `hyprsunset` via `pgrep`, and toggling via `hyprctl temperature 4500` or `identity`) to avoid `PATH` and `CWD` resolution issues associated with external scripts.
+- `src/widget/display/index.tsx` `blueLightEnabled` state is now accurately initialized on startup by checking for the existence of the state file.
+- `flake.nix` now includes `hyprsunset` and `libnotify` in the `runtimePath` and `devShell` so the bluelight toggle and notifications are always supported by the package environment.

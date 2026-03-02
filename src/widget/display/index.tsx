@@ -8,7 +8,7 @@ const TOP_ROW_SLOT_WIDTH = 50
 const BRIGHTNESS_DEVICE = "amdgpu_bl2"
 const BRIGHTNESS_FALLBACK_PERCENT = 50
 const DEBUG_BRIGHTNESS = false
-const BLUE_LIGHT_TOGGLE_COMMAND = "bash -lc 'toggle-bluelight'"
+const BLUE_LIGHT_STATE_FILE = "/tmp/hyprsunset_state"
 
 const splitClasses = (value: string) =>
     value.trim().split(/\s+/).filter(Boolean)
@@ -500,7 +500,20 @@ function rebuildClientIcons(box: Gtk.Box, clients: ClientEntry[]) {
 }
 
 function toggleBlueLight() {
-    runCommand(BLUE_LIGHT_TOGGLE_COMMAND)
+    const isActive = GLib.file_test(BLUE_LIGHT_STATE_FILE, GLib.FileTest.EXISTS)
+
+    // Ensure hyprsunset is running (async)
+    runCommand('bash -c "pgrep -x hyprsunset > /dev/null || hyprsunset &"')
+
+    if (isActive) {
+        runCommand("hyprctl hyprsunset identity")
+        GLib.unlink(BLUE_LIGHT_STATE_FILE)
+        runCommand('notify-send "Blue Light Filter" "Disabled"')
+    } else {
+        runCommand("hyprctl hyprsunset temperature 4500")
+        GLib.file_set_contents(BLUE_LIGHT_STATE_FILE, "", -1)
+        runCommand('notify-send "Blue Light Filter" "Enabled (4500K)"')
+    }
 }
 
 export default function DisplayTile() {
@@ -521,7 +534,7 @@ export default function DisplayTile() {
         readWorkspaceState,
     )
     const clients = createPoll<ClientEntry[]>(readClients() ?? [], 2_000, readClients)
-    const blueLightEnabled = Variable(false)
+    const blueLightEnabled = Variable(GLib.file_test(BLUE_LIGHT_STATE_FILE, GLib.FileTest.EXISTS))
     let suppressBrightnessWrites = true
 
     brightness.subscribe((state) => {

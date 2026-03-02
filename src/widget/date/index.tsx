@@ -49,10 +49,32 @@ export default function DateTile() {
             <box
                 vertical
                 spacing={5}
-                halign={Gtk.Align.CENTER}
+                halign={Gtk.Align.FILL}
                 valign={Gtk.Align.CENTER}
-                hexpand={false}
+                hexpand
             >
+                <box
+                    cssClasses={["date__decorative"]}
+                    halign={Gtk.Align.FILL}
+                    valign={Gtk.Align.CENTER}
+                    hexpand
+                >
+                    <image
+                        cssClasses={["date__icon", "date__icon--left"]}
+                        iconName="mute"
+                        pixelSize={11}
+                        halign={Gtk.Align.START}
+                        valign={Gtk.Align.CENTER}
+                    />
+                    <box hexpand />
+                    <image
+                        cssClasses={["date__icon", "date__icon--right"]}
+                        iconName="power_sleep"
+                        pixelSize={11}
+                        halign={Gtk.Align.END}
+                        valign={Gtk.Align.CENTER}
+                    />
+                </box>
                 <label
                     cssClasses={["date__day"]}
                     label={dayLabel}
