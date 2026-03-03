@@ -11,7 +11,7 @@ const VPN_SERVICE = `wg-quick-${VPN_INTERFACE}.service`
 const WIFI_TOGGLE_COMMAND =
     "bash -lc 'if [ \"$(nmcli radio wifi 2>/dev/null)\" = \"enabled\" ]; then nmcli radio wifi off && notify-send \"WiFi\" \"Wi-Fi Disabled\" -i network-wireless-disabled-symbolic; else nmcli radio wifi on && notify-send \"WiFi\" \"Wi-Fi Enabled\" -i network-wireless-signal-excellent-symbolic; fi'"
 const VPN_TOGGLE_COMMAND =
-    `bash -lc 'if systemctl is-active --quiet ${VPN_SERVICE}; then sudo systemctl stop ${VPN_SERVICE} && notify-send "VPN" "VPN (${VPN_INTERFACE}) Disabled" -i network-vpn-disconnected-symbolic; else sudo systemctl start ${VPN_SERVICE} && notify-send "VPN" "VPN (${VPN_INTERFACE}) Enabled" -i network-vpn-symbolic; fi'`
+    `bash -lc 'if systemctl is-active --quiet ${VPN_SERVICE}; then systemctl stop ${VPN_SERVICE} && notify-send "VPN" "VPN (${VPN_INTERFACE}) Disabled" -i network-vpn-disconnected-symbolic; else systemctl start ${VPN_SERVICE} && notify-send "VPN" "VPN (${VPN_INTERFACE}) Enabled" -i network-vpn-symbolic; fi'`
 
 const splitClasses = (value: string) =>
     value.trim().split(/\s+/).filter(Boolean)
@@ -355,11 +355,11 @@ export default function NetworkTile() {
 
     const vpnRowLabel = vpn((state) => formatVpnPrimaryLabel(state))
     const vpnRowLabelClasses = vpn((state) =>
-        (
-            state.active
-                ? "network__status-label network__status-label--vpn-on"
-                : "network__status-label network__status-label--offline"
-        ),
+    (
+        state.active
+            ? "network__status-label network__status-label--vpn-on"
+            : "network__status-label network__status-label--offline"
+    ),
     ).as(splitClasses)
     const vpnIpLabel = vpn((state) => formatVpnIpLabel(state))
     const vpnIpVisible = vpn((state) => Boolean(formatVpnIpLabel(state)))
