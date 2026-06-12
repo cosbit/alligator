@@ -8,14 +8,36 @@
     margin: tokens.$space-sm;
 }
 
+.battery__decorative-row {
+    min-height: 16px;
+}
+
+.battery__decorative-icon {
+    opacity: 0.72;
+    -gtk-icon-shadow: none;
+}
+
+.battery__decorative-icon--atom,
+.battery__decorative-icon--bullseye {
+    opacity: 0.68;
+}
+
+.battery__decorative-icon--donut {
+    opacity: 0.52;
+}
+
+.battery__decorative-icon--signal {
+    opacity: 0.5;
+}
+
 .battery__cells {
-    margin-top: 1px;
-    margin-bottom: 1px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .battery__cell {
     min-width: 13px;
-    min-height: 32px;
+    min-height: 30px;
     border-radius: 4px;
     border: 1px solid rgba(tokens.$gb-bg-hard, 0.18);
     background-color: tokens.$gb-light-bg;
@@ -48,7 +70,8 @@
 }
 
 .battery__status {
-    margin-top: 1px;
+    margin-top: 0;
+    min-height: 18px;
 }
 
 .battery__status-icon {

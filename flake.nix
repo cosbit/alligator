@@ -42,6 +42,8 @@
           pkgs.coreutils
           pkgs.hyprsunset
           pkgs.libnotify
+          pkgs.bluez
+          pkgs.util-linux
         ];
 
         alligator = pkgs.stdenvNoCC.mkDerivation {
@@ -123,6 +125,8 @@
             # dev dependencies for scripts
             hyprsunset
             libnotify
+            bluez
+            util-linux
           ];
 
           shellHook = ''

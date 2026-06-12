@@ -15,7 +15,7 @@ Canonical architecture notes and workflow for the Alligator AGS widget set.
 - `src/services/` should contain long-lived data sources or integrations.
 - `src/utils/` should contain shared helpers with no UI coupling.
 - `src/assets/` should contain images, icons, and other static resources.
-- `prompts/` holds planning prompts for molecular widget tasks; each file is a discrete build step.
+- `agents/prompts/` holds planning prompts for molecular widget tasks; each file is a discrete build step.
 
 ## Development workflow
 - Enter the dev shell: `nix develop`
@@ -1364,3 +1364,14 @@ event controller.
 - `src/widget/display/index.tsx` bluelight toggle now implements the logic internally (managing `/tmp/hyprsunset_state`, checking/starting `hyprsunset` via `pgrep`, and toggling via `hyprctl temperature 4500` or `identity`) to avoid `PATH` and `CWD` resolution issues associated with external scripts.
 - `src/widget/display/index.tsx` `blueLightEnabled` state is now accurately initialized on startup by checking for the existence of the state file.
 - `flake.nix` now includes `hyprsunset` and `libnotify` in the `runtimePath` and `devShell` so the bluelight toggle and notifications are always supported by the package environment.
+- `src/widget/bluetooth/index.tsx` implements the final row devices tile as a square dark Bluetooth tile. It polls `bluetoothctl show`, `bluetoothctl devices Paired`, and per-device `bluetoothctl info <address>` every 3 seconds, shows only trusted paired devices that are connected or have an RSSI from recent discovery, and exposes buttons for power, scan, and connect/disconnect.
+- `src/widget/bluetooth/index.tsx` parses `PowerState: ...blocked` from `bluetoothctl show`; when powering on it runs `rfkill unblock bluetooth` before `bluetoothctl power on` and reports failures with a critical notification.
+- `src/widget/bluetooth/index.tsx` scan uses an async shell command that enables discovery briefly, turns scanning off after 8 seconds, and sends a completion notification. Keep scan duration short unless a later design adds explicit scanning state.
+- `src/widget/bluetooth/style.scss` contains compact dark-tile controls for the Bluetooth power/scan row, status label, and up to two trusted in-range device buttons; connected devices use the aqua active color.
+- `src/widget/bluetooth/index.tsx` decorates the status row with `src/icons/splash.svg` and `src/icons/four_stars.svg` as left/right symbolic icons; both SVG roots use `color="#ebdbb2"` and `fill="currentColor"` like the power-action icons so dark-tile CSS can tint them.
+- `src/widget/Bar.tsx` row 5 now imports and renders `BluetoothTile` in the second square slot beside `NetworkTile`, replacing the dark placeholder.
+- `src/style.scss` imports the Bluetooth tile stylesheet with a unique `bluetooth` Sass namespace.
+- `flake.nix` now includes BlueZ (`pkgs.bluez` / `bluez`) and util-linux (`pkgs.util-linux` / `util-linux`) in both the packaged runtime path and dev shell so `bluetoothctl` and `rfkill` are available to the Bluetooth tile.
+- `src/widget/display/style.scss` and `src/widget/volume/style.scss` keep slider handles visually hidden with transparent/opacity-zero styling, but their GTK `slider` nodes use `1px` minimum dimensions instead of `0` to avoid negative `GtkGizmo` minimum-width warnings.
+- `src/widget/battery/index.tsx` decorates the light battery tile with existing SVG assets (`atom`, `circle_bullseye`, `donut`, and `signal`) grouped together in a dedicated bottom row. The SVG source colors are intentionally left unchanged.
+- `src/widget/battery/style.scss` defines the battery decorative icon row/opacities and balances battery cell/status heights so the bottom icon row fits within the square tile.

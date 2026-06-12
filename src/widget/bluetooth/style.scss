@@ -1,0 +1,144 @@
+@use "../../styles/tokens" as tokens;
+
+.tile--bluetooth {
+    padding: 0;
+}
+
+.bluetooth__content {
+    margin: tokens.$space-sm;
+}
+
+.bluetooth__button {
+    min-width: 0;
+    min-height: 22px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid tokens.$gb-accent-inactive;
+    border-radius: 6px;
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+    color: tokens.$gb-fg-muted;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.bluetooth__button:hover {
+    background-image: none;
+    background-color: rgba(tokens.$gb-selection, 0.9);
+}
+
+.bluetooth__button:active,
+.bluetooth__button:checked {
+    background-image: none;
+    background-color: rgba(tokens.$gb-selection, 0.95);
+}
+
+.bluetooth__button:disabled {
+    background-image: none;
+    opacity: 0.45;
+}
+
+.bluetooth__button label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: inherit;
+}
+
+.bluetooth__button--active {
+    color: tokens.$gb-fg;
+}
+
+.bluetooth__button--power.bluetooth__button--active {
+    border-color: tokens.$gb-blue;
+    background-color: rgba(tokens.$gb-blue, 0.14);
+    color: tokens.$gb-blue;
+}
+
+.bluetooth__button--scan.bluetooth__button--active {
+    border-color: tokens.$gb-purple;
+    background-color: rgba(tokens.$gb-purple, 0.14);
+    color: tokens.$gb-purple;
+}
+
+.bluetooth__status {
+    min-height: 16px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15px;
+    color: tokens.$gb-fg;
+}
+
+.bluetooth__status--online {
+    color: tokens.$gb-fg;
+}
+
+.bluetooth__status--idle {
+    color: tokens.$gb-yellow;
+}
+
+.bluetooth__status--offline {
+    color: tokens.$gb-fg-muted;
+}
+
+.bluetooth__status-row {
+    min-height: 18px;
+}
+
+.bluetooth__decorative-icon {
+    color: tokens.$gb-fg;
+    opacity: 0.72;
+    -gtk-icon-shadow: none;
+}
+
+.bluetooth__decorative-icon--splash {
+    margin-left: 1px;
+}
+
+.bluetooth__decorative-icon--stars {
+    margin-right: 1px;
+}
+
+.bluetooth__devices {
+    min-height: 49px;
+}
+
+.bluetooth__device {
+    min-height: 22px;
+    padding: 0 tokens.$space-xs;
+    margin: 0;
+    border: 1px solid tokens.$gb-accent-inactive;
+    border-radius: 6px;
+    background-image: none;
+    background-color: tokens.$gb-bg-soft;
+    color: tokens.$gb-fg-muted;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+.bluetooth__device:hover {
+    border-color: tokens.$gb-blue;
+    background-image: none;
+    background-color: rgba(tokens.$gb-selection, 0.9);
+}
+
+.bluetooth__device:active,
+.bluetooth__device:checked {
+    background-image: none;
+    background-color: rgba(tokens.$gb-selection, 0.95);
+}
+
+.bluetooth__device label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    color: inherit;
+}
+
+.bluetooth__device--connected {
+    border-color: tokens.$gb-aqua;
+    background-color: rgba(tokens.$gb-aqua, 0.14);
+    color: tokens.$gb-aqua;
+}

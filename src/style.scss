@@ -7,6 +7,7 @@
 @use "./widget/display/style" as display;
 @use "./widget/volume/style" as volume;
 @use "./widget/network/style" as network;
+@use "./widget/bluetooth/style" as bluetooth;
 
 // https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
 $fg-color: #{"@theme_fg_color"};

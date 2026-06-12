@@ -218,7 +218,7 @@ export default function BatteryTile() {
             <box
                 cssClasses={["battery__content"]}
                 vertical
-                spacing={4}
+                spacing={3}
                 halign={Gtk.Align.FILL}
                 valign={Gtk.Align.START}
                 hexpand
@@ -263,6 +263,44 @@ export default function BatteryTile() {
                         valign={Gtk.Align.CENTER}
                         hexpand={false}
                         vexpand={false}
+                    />
+                </box>
+                <box
+                    cssClasses={["battery__decorative-row", "battery__decorative-row--bottom"]}
+                    spacing={3}
+                    homogeneous
+                    halign={Gtk.Align.FILL}
+                    valign={Gtk.Align.CENTER}
+                    hexpand
+                    vexpand={false}
+                >
+                    <image
+                        cssClasses={["battery__decorative-icon", "battery__decorative-icon--atom"]}
+                        iconName="atom"
+                        pixelSize={14}
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
+                    />
+                    <image
+                        cssClasses={["battery__decorative-icon", "battery__decorative-icon--bullseye"]}
+                        iconName="circle_bullseye"
+                        pixelSize={14}
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
+                    />
+                    <image
+                        cssClasses={["battery__decorative-icon", "battery__decorative-icon--donut"]}
+                        iconName="donut"
+                        pixelSize={18}
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
+                    />
+                    <image
+                        cssClasses={["battery__decorative-icon", "battery__decorative-icon--signal"]}
+                        iconName="signal"
+                        pixelSize={18}
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
                     />
                 </box>
             </box>
