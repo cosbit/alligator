@@ -12,6 +12,10 @@
     min-height: 24px;
 }
 
+.battery__decorative-row--bottom {
+    margin-bottom: 1px;
+}
+
 .battery__decorative-icon {
     opacity: 0.72;
     -gtk-icon-shadow: none;
@@ -72,6 +76,12 @@
 
 .battery__status-icon--charging {
     color: tokens.$gb-green;
+}
+
+.battery__tagline {
+    font-size: 9px;
+    font-style: italic;
+    font-weight: 600;
 }
 
 .battery__percent {

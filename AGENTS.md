@@ -1376,4 +1376,5 @@ event controller.
 - `src/widget/display/style.scss` and `src/widget/volume/style.scss` keep slider handles visually hidden with transparent/opacity-zero styling, but their GTK `slider` nodes use `1px` minimum dimensions instead of `0` to avoid negative `GtkGizmo` minimum-width warnings.
 - `src/widget/battery/index.tsx` decorates the light battery tile with larger `atom` and `circle_bullseye` SVG assets grouped in a dedicated bottom row. The SVG source colors are intentionally left unchanged.
 - `src/widget/battery/style.scss` defines the battery decorative icon row/opacities and balances battery cell/status heights so the larger bottom icons fit within the square tile.
-- `src/widget/battery/index.tsx` now places the percentage in its own row below the decorative icons, and the status arrow is visible only while charging; discharging no longer renders an arrow.
+- `src/widget/battery/index.tsx` now places the percentage between the bottom decorative icons, pins that decorative/percent row near the tile bottom with a spacer above it, and keeps the status arrow visible only while charging.
+- `src/widget/battery/index.tsx` includes a centered italic `potential energy` tagline between the upper battery/status area and the bottom icon/percentage row; style it via `.battery__tagline`.

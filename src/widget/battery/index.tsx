@@ -203,9 +203,9 @@ export default function BatteryTile() {
                 vertical
                 spacing={3}
                 halign={Gtk.Align.FILL}
-                valign={Gtk.Align.START}
+                valign={Gtk.Align.FILL}
                 hexpand
-                vexpand={false}
+                vexpand
             >
                 <box
                     cssClasses={["battery__cells"]}
@@ -241,11 +241,29 @@ export default function BatteryTile() {
                     />
                 </box>
                 <box
+                    cssClasses={["battery__spacer"]}
+                    hexpand={false}
+                    vexpand
+                />
+                <label
+                    cssClasses={["battery__tagline"]}
+                    label="potential energy"
+                    halign={Gtk.Align.CENTER}
+                    valign={Gtk.Align.CENTER}
+                    hexpand={false}
+                    vexpand={false}
+                />
+                <box
+                    cssClasses={["battery__spacer"]}
+                    hexpand={false}
+                    vexpand
+                />
+                <box
                     cssClasses={["battery__decorative-row", "battery__decorative-row--bottom"]}
-                    spacing={3}
+                    spacing={4}
                     homogeneous
                     halign={Gtk.Align.FILL}
-                    valign={Gtk.Align.CENTER}
+                    valign={Gtk.Align.END}
                     hexpand
                     vexpand={false}
                 >
@@ -256,6 +274,14 @@ export default function BatteryTile() {
                         halign={Gtk.Align.CENTER}
                         valign={Gtk.Align.CENTER}
                     />
+                    <label
+                        cssClasses={["battery__percent"]}
+                        label={percentLabel}
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
+                        hexpand={false}
+                        vexpand={false}
+                    />
                     <image
                         cssClasses={["battery__decorative-icon", "battery__decorative-icon--bullseye"]}
                         iconName="circle_bullseye"
@@ -264,14 +290,6 @@ export default function BatteryTile() {
                         valign={Gtk.Align.CENTER}
                     />
                 </box>
-                <label
-                    cssClasses={["battery__percent"]}
-                    label={percentLabel}
-                    halign={Gtk.Align.CENTER}
-                    valign={Gtk.Align.CENTER}
-                    hexpand={false}
-                    vexpand={false}
-                />
             </box>
         </box>
     )
