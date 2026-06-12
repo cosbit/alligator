@@ -157,22 +157,6 @@ function createCellClass(index: number, infoAccessor: ReturnType<typeof createBa
     }).as(splitClasses)
 }
 
-function createStatusIconName(infoAccessor: ReturnType<typeof createBatteryPoll>) {
-    return infoAccessor((info) =>
-        info.charging ? "go-up-symbolic" : "go-down-symbolic",
-    )
-}
-
-function createStatusIconClass(infoAccessor: ReturnType<typeof createBatteryPoll>) {
-    return infoAccessor((info) => {
-        if (info.charging) {
-            return "battery__status-icon battery__status-icon--charging"
-        }
-
-        return "battery__status-icon battery__status-icon--discharging"
-    }).as(splitClasses)
-}
-
 function createPercentLabel(infoAccessor: ReturnType<typeof createBatteryPoll>) {
     return infoAccessor((info) => `${info.percent}%`)
 }
@@ -203,8 +187,7 @@ export default function BatteryTile() {
         createCellClass(3, info),
         createCellClass(4, info),
     ]
-    const statusIconName = createStatusIconName(info)
-    const statusIconClasses = createStatusIconClass(info)
+    const statusIconVisible = info((state) => state.charging)
     const percentLabel = createPercentLabel(info)
 
     return (
@@ -241,24 +224,16 @@ export default function BatteryTile() {
                 </box>
                 <box
                     cssClasses={["battery__status"]}
-                    spacing={4}
-                    halign={Gtk.Align.END}
+                    halign={Gtk.Align.CENTER}
                     valign={Gtk.Align.CENTER}
                     hexpand={false}
                     vexpand={false}
+                    visible={statusIconVisible}
                 >
                     <image
-                        cssClasses={statusIconClasses}
-                        iconName={statusIconName}
+                        cssClasses={["battery__status-icon", "battery__status-icon--charging"]}
+                        iconName="go-up-symbolic"
                         pixelSize={13}
-                        halign={Gtk.Align.CENTER}
-                        valign={Gtk.Align.CENTER}
-                        hexpand={false}
-                        vexpand={false}
-                    />
-                    <label
-                        cssClasses={["battery__percent"]}
-                        label={percentLabel}
                         halign={Gtk.Align.CENTER}
                         valign={Gtk.Align.CENTER}
                         hexpand={false}
@@ -277,32 +252,26 @@ export default function BatteryTile() {
                     <image
                         cssClasses={["battery__decorative-icon", "battery__decorative-icon--atom"]}
                         iconName="atom"
-                        pixelSize={14}
+                        pixelSize={24}
                         halign={Gtk.Align.CENTER}
                         valign={Gtk.Align.CENTER}
                     />
                     <image
                         cssClasses={["battery__decorative-icon", "battery__decorative-icon--bullseye"]}
                         iconName="circle_bullseye"
-                        pixelSize={14}
-                        halign={Gtk.Align.CENTER}
-                        valign={Gtk.Align.CENTER}
-                    />
-                    <image
-                        cssClasses={["battery__decorative-icon", "battery__decorative-icon--donut"]}
-                        iconName="donut"
-                        pixelSize={18}
-                        halign={Gtk.Align.CENTER}
-                        valign={Gtk.Align.CENTER}
-                    />
-                    <image
-                        cssClasses={["battery__decorative-icon", "battery__decorative-icon--signal"]}
-                        iconName="signal"
-                        pixelSize={18}
+                        pixelSize={24}
                         halign={Gtk.Align.CENTER}
                         valign={Gtk.Align.CENTER}
                     />
                 </box>
+                <label
+                    cssClasses={["battery__percent"]}
+                    label={percentLabel}
+                    halign={Gtk.Align.CENTER}
+                    valign={Gtk.Align.CENTER}
+                    hexpand={false}
+                    vexpand={false}
+                />
             </box>
         </box>
     )

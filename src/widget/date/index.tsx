@@ -62,7 +62,7 @@ export default function DateTile() {
                     <image
                         cssClasses={["date__icon", "date__icon--left"]}
                         iconName="mute"
-                        pixelSize={11}
+                        pixelSize={20}
                         halign={Gtk.Align.START}
                         valign={Gtk.Align.CENTER}
                     />
@@ -70,7 +70,7 @@ export default function DateTile() {
                     <image
                         cssClasses={["date__icon", "date__icon--right"]}
                         iconName="power_sleep"
-                        pixelSize={11}
+                        pixelSize={20}
                         halign={Gtk.Align.END}
                         valign={Gtk.Align.CENTER}
                     />

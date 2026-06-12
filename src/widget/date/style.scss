@@ -1,13 +1,13 @@
 @use "../../styles/tokens" as tokens;
 
 .date__decorative {
-    padding-left: tokens.$space-xs;
-    padding-right: tokens.$space-xs;
+    padding-left: tokens.$space-sm;
+    padding-right: tokens.$space-sm;
 }
 
 .date__icon {
-    min-width: 12px;
-    min-height: 12px;
+    min-width: 20px;
+    min-height: 20px;
     opacity: 0.65;
 }
 

@@ -1361,6 +1361,7 @@ event controller.
 - `src/icons/` custom glyphs used by `src/widget/clock/index.tsx`, `src/widget/display/index.tsx`, and `src/widget/power-actions/index.tsx` were renamed from numeric filenames to semantic names (e.g. `power_lock.svg`, `display_blue_light_toggle.svg`, `clock_bottom_icon_left.svg`); keep widget `iconName` values aligned to these basenames.
 - `src/widget/date/index.tsx` now includes a decorative top row with two non-interactive icons (`mute` and `power_sleep`) above the day/date labels; polling and date parsing behavior is unchanged.
 - `src/widget/date/style.scss` now defines `.date__decorative` plus `.date__icon*` classes for subtle icon sizing, spacing, opacity, and accent coloring.
+- `src/widget/date/index.tsx` and `src/widget/date/style.scss` now size the date tile decorative icons like the clock tile icons (`20px` pixel size/min box) and use the same `tokens.$space-sm` horizontal edge inset.
 - `src/widget/display/index.tsx` bluelight toggle now implements the logic internally (managing `/tmp/hyprsunset_state`, checking/starting `hyprsunset` via `pgrep`, and toggling via `hyprctl temperature 4500` or `identity`) to avoid `PATH` and `CWD` resolution issues associated with external scripts.
 - `src/widget/display/index.tsx` `blueLightEnabled` state is now accurately initialized on startup by checking for the existence of the state file.
 - `flake.nix` now includes `hyprsunset` and `libnotify` in the `runtimePath` and `devShell` so the bluelight toggle and notifications are always supported by the package environment.
@@ -1373,5 +1374,6 @@ event controller.
 - `src/style.scss` imports the Bluetooth tile stylesheet with a unique `bluetooth` Sass namespace.
 - `flake.nix` now includes BlueZ (`pkgs.bluez` / `bluez`) and util-linux (`pkgs.util-linux` / `util-linux`) in both the packaged runtime path and dev shell so `bluetoothctl` and `rfkill` are available to the Bluetooth tile.
 - `src/widget/display/style.scss` and `src/widget/volume/style.scss` keep slider handles visually hidden with transparent/opacity-zero styling, but their GTK `slider` nodes use `1px` minimum dimensions instead of `0` to avoid negative `GtkGizmo` minimum-width warnings.
-- `src/widget/battery/index.tsx` decorates the light battery tile with existing SVG assets (`atom`, `circle_bullseye`, `donut`, and `signal`) grouped together in a dedicated bottom row. The SVG source colors are intentionally left unchanged.
-- `src/widget/battery/style.scss` defines the battery decorative icon row/opacities and balances battery cell/status heights so the bottom icon row fits within the square tile.
+- `src/widget/battery/index.tsx` decorates the light battery tile with larger `atom` and `circle_bullseye` SVG assets grouped in a dedicated bottom row. The SVG source colors are intentionally left unchanged.
+- `src/widget/battery/style.scss` defines the battery decorative icon row/opacities and balances battery cell/status heights so the larger bottom icons fit within the square tile.
+- `src/widget/battery/index.tsx` now places the percentage in its own row below the decorative icons, and the status arrow is visible only while charging; discharging no longer renders an arrow.
