@@ -11,6 +11,36 @@ import BluetoothTile from "./bluetooth"
 export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
     const tileGutter = 6
+    const grid = new Gtk.Grid({
+        cssClasses: ["bar__inner"],
+        columnHomogeneous: true,
+        rowHomogeneous: true,
+        columnSpacing: tileGutter,
+        rowSpacing: tileGutter,
+        halign: Gtk.Align.CENTER,
+        valign: Gtk.Align.START,
+        hexpand: false,
+        vexpand: false,
+    })
+
+    function attach(tile: Gtk.Widget, column: number, row: number, width = 1, height = 1) {
+        // The shared grid owns allocation; individual content must not shrink a tile.
+        tile.halign = Gtk.Align.FILL
+        tile.valign = Gtk.Align.FILL
+        tile.hexpand = false
+        tile.vexpand = false
+        grid.attach(tile, column, row, width, height)
+    }
+
+    attach(ClockTile(), 0, 0)
+    attach(DateTile(), 1, 0)
+    attach(VolumeTile(), 0, 1, 2)
+    attach(new Gtk.Box({ cssClasses: ["tile", "tile--vertical", "tile--dark"] }), 0, 2, 1, 2)
+    attach(BatteryTile(), 1, 2)
+    attach(PowerActionsTile(), 1, 3)
+    attach(DisplayTile(), 0, 4, 2)
+    attach(NetworkTile(), 0, 5)
+    attach(BluetoothTile(), 1, 5)
 
     return <window
         name="sidebar"
@@ -23,47 +53,6 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
         application={app}
         setup={self => app.add_window(self)}
         >
-        <box cssClasses={["bar__inner"]} vertical spacing={tileGutter}>
-            <box /** First row; clock and date */
-                cssClasses={["bar__row", "bar__row--pair"]}
-                halign={Gtk.Align.CENTER}
-                spacing={tileGutter}
-            >
-                <ClockTile/>
-                <DateTile/>
-            </box>
-            <box /** Second row (wide); volume  */
-                cssClasses={["bar__row", "bar__row--single"]}
-                halign={Gtk.Align.CENTER}
-            >
-                <VolumeTile/>
-            </box>
-            <box /** Third row (vertical); decoration, power and actions */
-                cssClasses={["bar__row", "bar__row--split"]}
-                halign={Gtk.Align.CENTER}
-                spacing={tileGutter}
-            >
-                <box cssClasses={["tile", "tile--vertical", "tile--dark"]} />
-                <box cssClasses={["bar__column", "bar__column--stack"]} vertical spacing={tileGutter}>
-                    <BatteryTile/>
-                    <PowerActionsTile/>
-                </box>
-            </box>
-            <box /** Fourth row (wide); display & brightness */
-                cssClasses={["bar__row", "bar__row--single"]}
-                halign={Gtk.Align.CENTER}
-                spacing={tileGutter}
-            >
-                <DisplayTile/>
-            </box>
-            <box /** Fith row; network & devices */
-                cssClasses={["bar__row", "bar__row--pair"]}
-                halign={Gtk.Align.CENTER}
-                spacing={tileGutter}
-            >
-                <NetworkTile/>
-                <BluetoothTile/>
-            </box>
-        </box>
+        {grid}
     </window>
 }

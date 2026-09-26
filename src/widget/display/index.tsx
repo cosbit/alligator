@@ -5,7 +5,8 @@ import "./style.scss"
 
 const HORIZONTAL_TILE_WIDTH = 220
 const TOP_ROW_SLOT_WIDTH = 50
-const BRIGHTNESS_DEVICE = "amdgpu_bl2"
+// Kernel upgrades can renumber the AMD backlight; keep reads and writes on AMD.
+const BRIGHTNESS_DEVICE = "amdgpu_bl*"
 const BRIGHTNESS_FALLBACK_PERCENT = 50
 const DEBUG_BRIGHTNESS = false
 const BLUE_LIGHT_STATE_FILE = "/tmp/hyprsunset_state"
@@ -576,7 +577,7 @@ export default function DisplayTile() {
 
     return (
         <box
-            cssClasses={["tile", /*"tile--horizontal",*/ "tile--display", "tile--light"]}
+            cssClasses={["tile", "tile--horizontal", "tile--display", "tile--light"]}
             halign={Gtk.Align.CENTER}
             valign={Gtk.Align.CENTER}
             hexpand={false}

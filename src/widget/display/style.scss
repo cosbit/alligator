@@ -2,8 +2,6 @@
 
 .tile--display {
     padding: 0;
-    min-width: tokens.$tile-unit * 2 + tokens.$tile-gutter - 4px;
-    min-height: tokens.$tile-unit;
 }
 
 .display__content {
@@ -106,6 +104,10 @@
 .display__brightness-icon {
     color: tokens.$gb-light-fg;
     opacity: 0.85;
+}
+
+.display__brightness-slider {
+    padding: 0;
 }
 
 .display__brightness-slider trough {
