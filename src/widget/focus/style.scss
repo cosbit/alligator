@@ -1,0 +1,23 @@
+@use "../../styles/tokens" as tokens;
+
+.focus__content { margin: tokens.$space-sm; }
+
+.tile--focus button {
+    min-width: 0;
+    min-height: 0;
+    padding: 4px 2px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: none;
+    background-image: none;
+    font-size: 10px;
+    color: tokens.$gb-fg;
+}
+
+.tile--focus .focus__mode,
+.tile--focus .focus__reset { background-color: transparent; }
+.tile--focus .focus__mode--active { background-color: tokens.$gb-selection; color: tokens.$gb-accent-active; }
+.tile--focus .focus__start { background-color: tokens.$gb-aqua; color: tokens.$gb-bg-hard; font-weight: 700; }
+.tile--focus button:hover { background-color: tokens.$gb-selection; color: tokens.$gb-fg; }
+.tile--focus button:focus-visible { outline: 1px solid tokens.$gb-accent-active; }
+.focus__time { font-size: 26px; font-weight: 700; font-feature-settings: "tnum"; }

@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict'
+import { test } from 'node:test'
+import { FocusTimer } from './timer.ts'
+
+test('pause/resume preserves time and completion is counted once', () => {
+    const timer = new FocusTimer()
+    timer.toggle(1000)
+    timer.toggle(61500)
+    assert.equal(timer.remaining, 1439500)
+    timer.tick(100000)
+    assert.equal(timer.remaining, 1439500)
+    timer.toggle(200000)
+    assert.equal(timer.tick(1639499), false)
+    assert.equal(timer.snapshot().seconds, 1)
+    assert.equal(timer.tick(1639500), true)
+    assert.equal(timer.completed, 1)
+    assert.equal(timer.running, false)
+    assert.equal(timer.tick(9999999), false)
+    assert.equal(timer.completed, 1)
+})
+
+test('reset and mode changes cancel running intervals; breaks do not count', () => {
+    const timer = new FocusTimer()
+    timer.toggle(0)
+    timer.reset('break')
+    assert.equal(timer.running, false)
+    assert.equal(timer.snapshot().seconds, 300)
+    timer.toggle(1000)
+    assert.equal(timer.tick(400000), true)
+    assert.equal(timer.completed, 0)
+    timer.reset('focus')
+    timer.toggle(500000)
+    assert.equal(timer.tick(3000000), true)
+    assert.equal(timer.completed, 1)
+    timer.toggle(4000000)
+    assert.equal(timer.snapshot().seconds, 1500)
+    timer.reset()
+    assert.equal(timer.completed, 1)
+    assert.equal(timer.running, false)
+})

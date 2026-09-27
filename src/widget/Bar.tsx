@@ -7,6 +7,7 @@ import PowerActionsTile from "./power-actions"
 import DisplayTile from "./display"
 import NetworkTile from "./network"
 import BluetoothTile from "./bluetooth"
+import FocusTile from "./focus"
 
 export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     const { TOP, RIGHT, BOTTOM } = Astal.WindowAnchor
@@ -18,7 +19,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
         columnSpacing: tileGutter,
         rowSpacing: tileGutter,
         halign: Gtk.Align.CENTER,
-        valign: Gtk.Align.START,
+        valign: Gtk.Align.CENTER,
         hexpand: false,
         vexpand: false,
     })
@@ -35,7 +36,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor, app: Astal.Application) {
     attach(ClockTile(), 0, 0)
     attach(DateTile(), 1, 0)
     attach(VolumeTile(), 0, 1, 2)
-    attach(new Gtk.Box({ cssClasses: ["tile", "tile--vertical", "tile--dark"] }), 0, 2, 1, 2)
+    attach(FocusTile(), 0, 2, 1, 2)
     attach(BatteryTile(), 1, 2)
     attach(PowerActionsTile(), 1, 3)
     attach(DisplayTile(), 0, 4, 2)
